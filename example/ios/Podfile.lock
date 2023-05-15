@@ -1,0 +1,39 @@
+PODS:
+  - Flutter (1.0.0)
+  - integration_test (0.0.1):
+    - Flutter
+  - recaptcha_enterprise_flutter (18.2.0):
+    - Flutter
+    - RecaptchaEnterprise (= 18.2.0)
+  - RecaptchaEnterprise (18.2.0):
+    - RecaptchaInterop (~> 18.2.0)
+  - RecaptchaInterop (18.2.0)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - recaptcha_enterprise_flutter (from `.symlinks/plugins/recaptcha_enterprise_flutter/ios`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - RecaptchaEnterprise
+    - RecaptchaInterop
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+  recaptcha_enterprise_flutter:
+    :path: ".symlinks/plugins/recaptcha_enterprise_flutter/ios"
+
+SPEC CHECKSUMS:
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  integration_test: a1e7d09bd98eca2fc37aefd79d4f41ad37bdbbe5
+  recaptcha_enterprise_flutter: 1190b2027d32d28a7ca49cff969bf79d931d4ab5
+  RecaptchaEnterprise: 56ceddf76a1c2fe23914d87081afa10f39cab099
+  RecaptchaInterop: 6e5bca275f90cab07ca038bbe528bbdb0e2a7565
+
+PODFILE CHECKSUM: 225aa1a2d145acf0c7276d949f4c7ab6b69e2c7d
+
+COCOAPODS: 1.11.3
