@@ -15,7 +15,7 @@
 name: recaptcha_enterprise_flutter
 description: A flutter plugin for reCAPTCHA Enterprise.
 version: 18.2.0
-homepage:
+homepage: https://github.com/GoogleCloudPlatform/recaptcha-enterprise-flutter
 
 environment:
   sdk: '>=2.18.4 <3.0.0'
