@@ -38,7 +38,6 @@ void main() {
   });
 
   test('initClient', () async {
-    var recaptchaEnterprisePlugin = RecaptchaEnterprise();
     var fakePlatform = MockRecaptchaEnterprisePlatform();
     RecaptchaEnterprisePlatform.instance = fakePlatform;
 
@@ -46,7 +45,6 @@ void main() {
   });
 
   test('initClientWithTimeout', () async {
-    var recaptchaEnterprisePlugin = RecaptchaEnterprise();
     var fakePlatform = MockRecaptchaEnterprisePlatform();
     RecaptchaEnterprisePlatform.instance = fakePlatform;
 
@@ -55,7 +53,6 @@ void main() {
   });
 
   test('execute', () async {
-    var recaptchaEnterprisePlugin = RecaptchaEnterprise();
     var fakePlatform = MockRecaptchaEnterprisePlatform();
     RecaptchaEnterprisePlatform.instance = fakePlatform;
 
@@ -63,7 +60,6 @@ void main() {
   });
 
   test('executeWithTimeout', () async {
-    var recaptchaEnterprisePlugin = RecaptchaEnterprise();
     var fakePlatform = MockRecaptchaEnterprisePlatform();
     RecaptchaEnterprisePlatform.instance = fakePlatform;
 
