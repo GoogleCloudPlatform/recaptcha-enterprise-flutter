@@ -42,7 +42,7 @@ abstract class RecaptchaEnterprisePlatform extends PlatformInterface {
     throw UnimplementedError('initClient() has not been implemented.');
   }
 
-  Future<String> execute(String action, {double? timeout}) {
+  Future<String> execute(String action, {bool isCustomAction = false, double? timeout}) {
     throw UnimplementedError('execute() has not been implemented.');
   }
 }

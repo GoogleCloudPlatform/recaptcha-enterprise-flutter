@@ -44,10 +44,10 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
     channel.setMethodCallHandler(this)
   }
 
-  fun mapAction(actionStr: String): RecaptchaAction {
+  fun mapAction(actionStr: String, isCustomAction: Boolean): RecaptchaAction {
     return when {
-      actionStr.equals("login", ignoreCase = true) -> RecaptchaAction.LOGIN
-      actionStr.equals("signup", ignoreCase = true) -> RecaptchaAction.SIGNUP
+      actionStr.equals("login", ignoreCase = true) && !isCustomAction -> RecaptchaAction.LOGIN
+      actionStr.equals("signup", ignoreCase = true) && !isCustomAction -> RecaptchaAction.SIGNUP
       else -> RecaptchaAction.custom(actionStr)
     }
   }
@@ -82,12 +82,19 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
     }
 
     val actionStr = call.argument<String>("action")
+    val isCustomAction = call.argument<Boolean>("isCustomAction")
+
     if (actionStr == null) {
       result.error("FL_EXECUTE_FAILED", "Missing action", null)
       return
     }
 
-    val action = mapAction(actionStr)
+    if (isCustomAction == null) {
+      result.error("FL_EXECUTE_FAILED", "Missing isCustomAction", null)
+      return
+    }
+
+    val action = mapAction(actionStr, isCustomAction)
     val timeout = call.argument<Long>("timeout")
     GlobalScope.launch {
       recaptchaClient

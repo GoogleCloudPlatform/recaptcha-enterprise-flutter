@@ -26,10 +26,11 @@ public class SwiftRecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 
-  private func mapAction(_ actionStr: String) -> RecaptchaAction {
-    if actionStr.caseInsensitiveCompare("login") == .orderedSame {
+  private func mapAction(_ actionStr: String, isCustomAction: Bool) -> RecaptchaAction {
+
+    if actionStr.caseInsensitiveCompare("login") == .orderedSame && !isCustomAction {
       return RecaptchaAction(action: .login)
-    } else if actionStr.caseInsensitiveCompare("signup") == .orderedSame {
+    } else if actionStr.caseInsensitiveCompare("signup") == .orderedSame && !isCustomAction {
       return RecaptchaAction(action: .signup)
     } else {
       return RecaptchaAction(customAction: actionStr)
@@ -77,9 +78,10 @@ public class SwiftRecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
     }
 
     if let args = call.arguments as? [String: Any],
-      let actionStr = args["action"] as? String
+       let actionStr = args["action"] as? String,
+       let isCustomAction = args["isCustomAction"] as? Bool
     {
-      let action = mapAction(actionStr)
+      let action = mapAction(actionStr, isCustomAction: isCustomAction)
       client.execute(action) { (token, error) -> Void in
         if let token = token {
           result(token.recaptchaToken)

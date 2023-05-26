@@ -20,8 +20,8 @@ class RecaptchaEnterprise {
         .initClient(siteKey, timeout: timeout);
   }
 
-  static Future<String> execute(String action, {double? timeout}) {
+  static Future<String> execute(String action, {bool isCustomAction = false, double? timeout}) {
     return RecaptchaEnterprisePlatform.instance
-        .execute(action, timeout: timeout);
+        .execute(action, timeout: timeout, isCustomAction: isCustomAction);
   }
 }

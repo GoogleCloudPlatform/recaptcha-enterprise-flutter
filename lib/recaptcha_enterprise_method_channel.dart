@@ -35,9 +35,10 @@ class MethodChannelRecaptchaEnterprise extends RecaptchaEnterprisePlatform {
   }
 
   @override
-  Future<String> execute(String action, {double? timeout}) async {
+  Future<String> execute(String action, {bool isCustomAction = false, double? timeout}) async {
     Map<String, dynamic> opts = {
       'action': action,
+      'isCustomAction': isCustomAction
     };
 
     if (timeout != null) {
