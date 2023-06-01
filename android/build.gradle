@@ -62,5 +62,5 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.android.recaptcha:recaptcha:18.2.0'
+    implementation 'com.google.android.recaptcha:recaptcha:18.2.1'
 }
