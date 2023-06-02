@@ -2,9 +2,9 @@ PODS:
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
-  - recaptcha_enterprise_flutter (18.2.0):
+  - recaptcha_enterprise_flutter (18.2.1):
     - Flutter
-    - RecaptchaEnterprise (= 18.2.0)
+    - RecaptchaEnterprise (<= 18.2.1, >= 18.2.0)
   - RecaptchaEnterprise (18.2.0):
     - RecaptchaInterop (~> 18.2.0)
   - RecaptchaInterop (18.2.0)
@@ -29,11 +29,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  integration_test: a1e7d09bd98eca2fc37aefd79d4f41ad37bdbbe5
-  recaptcha_enterprise_flutter: 1190b2027d32d28a7ca49cff969bf79d931d4ab5
+  integration_test: 13825b8a9334a850581300559b8839134b124670
+  recaptcha_enterprise_flutter: 985e528ac2ecb3f9f184257c06700658ac6b9d58
   RecaptchaEnterprise: 56ceddf76a1c2fe23914d87081afa10f39cab099
   RecaptchaInterop: 6e5bca275f90cab07ca038bbe528bbdb0e2a7565
 
-PODFILE CHECKSUM: 225aa1a2d145acf0c7276d949f4c7ab6b69e2c7d
+PODFILE CHECKSUM: 1d58595b82b880200a7ded05da9181d30ef8c1b7
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1

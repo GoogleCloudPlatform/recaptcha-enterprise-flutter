@@ -5,10 +5,10 @@
 
 Pod::Spec.new do |s|
   s.name             = 'recaptcha_enterprise_flutter'
-  s.version          = '18.2.0'
-  s.summary          = 'A new Flutter plugin project.'
+  s.version          = '18.2.1'
+  s.summary          = 'reCAPTCHA Enterprise Flutter plugin'
   s.description      = <<-DESC
-A new Flutter plugin project.
+  reCAPTCHA Enterprise Flutter plugin
                        DESC
   s.homepage         = 'https://cloud.google.com/recaptcha-enterprise/'
   s.license          = { :file => '../LICENSE' }
@@ -16,7 +16,7 @@ A new Flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'RecaptchaEnterprise', '18.2.0'
+  s.dependency 'RecaptchaEnterprise', '>= 18.2.0','<= 18.2.1'
   s.platform = :ios, '11.0'
   s.static_framework = true
   # Flutter.framework does not contain a i386 slice.
