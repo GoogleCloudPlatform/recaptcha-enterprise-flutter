@@ -27,9 +27,9 @@ public class SwiftRecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
   }
 
   private func mapAction(_ actionStr: String) -> RecaptchaAction {
-    if actionStr.caseInsensitiveCompare("login") == .orderedSame {
+    if actionStr == "login" {
       return RecaptchaAction(action: .login)
-    } else if actionStr.caseInsensitiveCompare("signup") == .orderedSame {
+    } else if actionStr == "signup" {
       return RecaptchaAction(action: .signup)
     } else {
       return RecaptchaAction(customAction: actionStr)
@@ -65,7 +65,6 @@ public class SwiftRecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
     } else {
       Recaptcha.getClient(withSiteKey: siteKey, completion: getClientClosure)
     }
-
   }
 
   private func execute(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -80,14 +79,24 @@ public class SwiftRecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
       let actionStr = args["action"] as? String
     {
       let action = mapAction(actionStr)
-      client.execute(action) { (token, error) -> Void in
+
+      let executeClosure: (String?, Error?) -> Void = { token, error -> Void in
         if let token = token {
-          result(token.recaptchaToken)
+          result(token)
         } else if let error = error {
+          guard let error = error as? RecaptchaError else {
+            FlutterError.init(code: "FL_CAST_ERROR", message: "Not a RecaptchaError", details: nil)
+            return
+          }
           result(
             FlutterError.init(code: String(error.code), message: error.errorMessage, details: nil)
           )
         }
+      }
+      if let args = call.arguments as? [String: Any], let timeout = args["timeout"] as? Double {
+        client.execute(withAction: action, withTimeout: timeout, completion: executeClosure)
+      } else {
+        client.execute(withAction: action, completion: executeClosure)
       }
     } else {
       result(

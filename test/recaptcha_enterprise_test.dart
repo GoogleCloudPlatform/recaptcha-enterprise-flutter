@@ -17,6 +17,7 @@ import 'package:recaptcha_enterprise_flutter/recaptcha_enterprise.dart';
 import 'package:recaptcha_enterprise_flutter/recaptcha_enterprise_platform_interface.dart';
 import 'package:recaptcha_enterprise_flutter/recaptcha_enterprise_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:recaptcha_enterprise_flutter/recaptcha_action.dart';
 
 class MockRecaptchaEnterprisePlatform
     with MockPlatformInterfaceMixin
@@ -56,13 +57,16 @@ void main() {
     var fakePlatform = MockRecaptchaEnterprisePlatform();
     RecaptchaEnterprisePlatform.instance = fakePlatform;
 
-    expect(await RecaptchaEnterprise.execute('action'), 'token');
+    expect(await RecaptchaEnterprise.execute(RecaptchaAction.LOGIN()), 'token');
   });
 
   test('executeWithTimeout', () async {
     var fakePlatform = MockRecaptchaEnterprisePlatform();
     RecaptchaEnterprisePlatform.instance = fakePlatform;
 
-    expect(await RecaptchaEnterprise.execute('action', timeout: 5000), 'token');
+    expect(
+        await RecaptchaEnterprise.execute(RecaptchaAction.LOGIN(),
+            timeout: 5000),
+        'token');
   });
 }

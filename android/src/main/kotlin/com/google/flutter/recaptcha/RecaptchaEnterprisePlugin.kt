@@ -46,8 +46,8 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
 
   fun mapAction(actionStr: String): RecaptchaAction {
     return when {
-      actionStr.equals("login", ignoreCase = true) -> RecaptchaAction.LOGIN
-      actionStr.equals("signup", ignoreCase = true) -> RecaptchaAction.SIGNUP
+      actionStr.equals("login") -> RecaptchaAction.LOGIN
+      actionStr.equals("signup") -> RecaptchaAction.SIGNUP
       else -> RecaptchaAction.custom(actionStr)
     }
   }
@@ -58,12 +58,12 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
       return
     }
     val siteKey = call.argument<String>("siteKey")
-    val timeout = call.argument<Long>("timeout")
+    val timeout = call.argument<Double>("timeout")
 
     if (siteKey != null) {
       GlobalScope.launch {
         let {
-            if (timeout != null) Recaptcha.getClient(application, siteKey, timeout)
+            if (timeout != null) Recaptcha.getClient(application, siteKey, timeout.toLong())
             else Recaptcha.getClient(application, siteKey)
           }
           .onSuccess { client ->
@@ -88,10 +88,10 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
     }
 
     val action = mapAction(actionStr)
-    val timeout = call.argument<Long>("timeout")
+    val timeout = call.argument<Double>("timeout")
     GlobalScope.launch {
       recaptchaClient
-        .let { if (timeout != null) it.execute(action, timeout) else it.execute(action) }
+        .let { if (timeout != null) it.execute(action, timeout.toLong()) else it.execute(action) }
         .onSuccess { token -> result.success(token) }
         .onFailure { exception -> result.error("FL_EXECUTE_FAILED", exception.toString(), null) }
     }
