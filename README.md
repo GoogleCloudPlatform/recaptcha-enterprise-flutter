@@ -17,26 +17,6 @@ For general documentation on reCAPTCHA Enterprise for mobile applications, see
 and
 [iOS](https://cloud.google.com/recaptcha-enterprise/docs/instrument-ios-apps).
 
-initClient:
-
-```
-    try {
-      await RecaptchaEnterprise.initClient(siteKey);
-    } catch (err) {
-      print('Caught exception on init: $err');
-    }
-```
-
-Execute:
-
-```
-    try {
-      await RecaptchaEnterprise.execute("LOGIN");
-    } catch (err) {
-      print('Caught exception on execute: $err');
-    }
-```
-
 ## Sample App
 
 Copy example/assets/configs/dev.json.example to example/assets/configs/dev.json

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import 'recaptcha_enterprise_platform_interface.dart';
+import 'recaptcha_action.dart';
 
 class RecaptchaEnterprise {
   static Future<bool> initClient(String siteKey, {double? timeout}) {
@@ -20,8 +21,8 @@ class RecaptchaEnterprise {
         .initClient(siteKey, timeout: timeout);
   }
 
-  static Future<String> execute(String action, {double? timeout}) {
+  static Future<String> execute(RecaptchaAction action, {double? timeout}) {
     return RecaptchaEnterprisePlatform.instance
-        .execute(action, timeout: timeout);
+        .execute(action.action, timeout: timeout);
   }
 }

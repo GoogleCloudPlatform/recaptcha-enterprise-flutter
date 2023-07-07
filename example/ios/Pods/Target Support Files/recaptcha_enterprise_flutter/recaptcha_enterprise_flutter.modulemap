@@ -1,0 +1,6 @@
+framework module recaptcha_enterprise_flutter {
+  umbrella header "recaptcha_enterprise_flutter-umbrella.h"
+
+  export *
+  module * { export * }
+}
