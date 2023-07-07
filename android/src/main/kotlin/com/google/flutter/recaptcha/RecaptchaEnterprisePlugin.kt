@@ -46,8 +46,8 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
 
   fun mapAction(actionStr: String): RecaptchaAction {
     return when {
-      actionStr.equals("login", ignoreCase = true) -> RecaptchaAction.LOGIN
-      actionStr.equals("signup", ignoreCase = true) -> RecaptchaAction.SIGNUP
+      actionStr.equals("login") -> RecaptchaAction.LOGIN
+      actionStr.equals("signup") -> RecaptchaAction.SIGNUP
       else -> RecaptchaAction.custom(actionStr)
     }
   }

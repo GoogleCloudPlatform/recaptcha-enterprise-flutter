@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
 import 'package:recaptcha_enterprise_flutter/recaptcha_enterprise.dart';
+import 'package:recaptcha_enterprise_flutter/recaptcha_action.dart';
 import 'dart:io' show Platform;
 import 'package:recaptcha_flutter_example/app_config.dart';
 
@@ -51,7 +52,7 @@ class _MyAppState extends State<MyApp> {
     var errorMessage = "failure";
 
     try {
-      result = await RecaptchaEnterprise.initClient(siteKey);
+      result = await RecaptchaEnterprise.initClient(siteKey, timeout: 10000);
     } on PlatformException catch (err) {
       print('Caught platform exception on init: $err');
       errorMessage = 'Code: ${err.code} Message ${err.message}';
@@ -65,11 +66,14 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  void execute() async {
+  void execute({custom = false}) async {
     String result;
 
     try {
-      result = await RecaptchaEnterprise.execute("LOGIN");
+      result = custom
+          ? await RecaptchaEnterprise.execute(RecaptchaAction.LOGIN())
+          : await RecaptchaEnterprise.execute(RecaptchaAction.custom('foo'),
+              timeout: 10000);
     } on PlatformException catch (err) {
       print('Caught platform exception on execute: $err');
       result = 'Code: ${err.code} Message ${err.message}';
@@ -133,6 +137,20 @@ class _MyAppState extends State<MyApp> {
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               child: const Text(
                 'Execute',
+                style: TextStyle(color: Colors.white, fontSize: 13.0),
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              execute(custom: true);
+            },
+            key: Key('executeButtonCustom'),
+            child: Container(
+              color: Colors.green,
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              child: const Text(
+                'ExecuteCustom',
                 style: TextStyle(color: Colors.white, fontSize: 13.0),
               ),
             ),
