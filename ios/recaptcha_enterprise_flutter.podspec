@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'recaptcha_enterprise_flutter'
-  s.version          = '18.2.2'
+  s.version          = '18.2.2+1'
   s.summary          = 'reCAPTCHA Enterprise Flutter plugin'
   s.description      = <<-DESC
   reCAPTCHA Enterprise Flutter plugin
