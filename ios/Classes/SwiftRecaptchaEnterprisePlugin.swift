@@ -28,9 +28,9 @@ public class SwiftRecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
 
   private func mapAction(_ actionStr: String) -> RecaptchaAction {
     if actionStr == "login" {
-      return RecaptchaAction(action: .login)
+      return RecaptchaAction.login
     } else if actionStr == "signup" {
-      return RecaptchaAction(action: .signup)
+      return RecaptchaAction.signup
     } else {
       return RecaptchaAction(customAction: actionStr)
     }
@@ -93,6 +93,7 @@ public class SwiftRecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
           )
         }
       }
+
       if let args = call.arguments as? [String: Any], let timeout = args["timeout"] as? Double {
         client.execute(withAction: action, withTimeout: timeout, completion: executeClosure)
       } else {
