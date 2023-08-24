@@ -1,3 +1,7 @@
+## 18.3.0
+
+* Update Android and iOS to '=18.3.0'
+
 ## 18.2.2+1
 
 * Fix bug in RecaptchaAction on iOS: https://github.com/GoogleCloudPlatform/recaptcha-enterprise-flutter/issues/18
