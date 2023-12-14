@@ -1,3 +1,7 @@
+## 18.4.0
+
+* Update Android and iOS to '=18.4.0'
+
 ## 18.3.0
 
 * Update Android and iOS to '=18.3.0'
