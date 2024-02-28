@@ -2,6 +2,7 @@ build/
 **/doc/api/
 .dart_tool/
 .flutter-plugins
+.flutter-plugins-dependencies
 .packages
 .pub-cache/
 .pub/
@@ -15,3 +16,7 @@ build/
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
 .gradle/
+
+**/example/assets/config/dev.json
+**/example/ios/Flutter/Generated.xcconfig
+**/example/ios/Flutter/flutter_export_environment.sh
