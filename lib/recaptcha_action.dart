@@ -15,9 +15,9 @@
 class RecaptchaAction {
   final String action;
 
-  RecaptchaAction.LOGIN() : action = "login";
+  RecaptchaAction.login() : action = "login";
 
-  RecaptchaAction.SIGNUP() : action = "signup";
+  RecaptchaAction.signup() : action = "signup";
 
   RecaptchaAction.custom(this.action);
 }
