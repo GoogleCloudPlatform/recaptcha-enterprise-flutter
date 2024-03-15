@@ -57,7 +57,7 @@ void main() {
     var fakePlatform = MockRecaptchaEnterprisePlatform();
     RecaptchaEnterprisePlatform.instance = fakePlatform;
 
-    expect(await RecaptchaEnterprise.execute(RecaptchaAction.login()), 'token');
+    expect(await RecaptchaEnterprise.execute(RecaptchaAction.LOGIN()), 'token');
   });
 
   test('executeWithTimeout', () async {
@@ -65,7 +65,7 @@ void main() {
     RecaptchaEnterprisePlatform.instance = fakePlatform;
 
     expect(
-        await RecaptchaEnterprise.execute(RecaptchaAction.login(),
+        await RecaptchaEnterprise.execute(RecaptchaAction.LOGIN(),
             timeout: 5000),
         'token');
   });

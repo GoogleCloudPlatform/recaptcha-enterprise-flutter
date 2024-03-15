@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
       result = custom
           ? await RecaptchaEnterprise.execute(RecaptchaAction.custom('foo'),
               timeout: 10000)
-          : await RecaptchaEnterprise.execute(RecaptchaAction.login());
+          : await RecaptchaEnterprise.execute(RecaptchaAction.LOGIN());
     } on PlatformException catch (err) {
       debugPrint('Caught platform exception on execute: $err');
       result = 'Code: ${err.code} Message ${err.message}';
