@@ -47,6 +47,9 @@ jobs:
                 channel: stable
             - name: Install Flutter dependencies
               run: flutter pub get
+            - uses: futureware-tech/simulator-action@v3
+              with:
+                model: 'iPhone 15'
             - name: Write sitekeys to file
               env:
                 EXAMPLE_DEV_JSON: ${{ secrets.EXAMPLE_DEV_JSON }}
@@ -54,7 +57,7 @@ jobs:
             - name: Run integration tests
               run: cd example && flutter test integration_test/app_test.dart --verbose
     android:
-        runs-on: ubuntu-latest
+        runs-on: macos-14
         steps:
             - uses: actions/checkout@v4
             - name: Setup Flutter SDK
