@@ -75,4 +75,5 @@ jobs:
               with:
                 api-level: 31
                 arch: x86_64
-                script: cd example && flutter test integration_test/app_test.dart
+                profile: Nexus 6      
+                script: cd example && flutter test integration_test/app_test.dart --timeout none
