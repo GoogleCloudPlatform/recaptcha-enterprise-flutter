@@ -13,12 +13,63 @@ jobs:
         name: format
         runs-on: ubuntu-latest
         steps:
-          - uses: actions/checkout@v3
+          - uses: actions/checkout@v4
           - name: Install Flutter
             uses: subosito/flutter-action@v2
             with:
-              flutter-version: '3.19.3'
               channel: 'stable'
               architecture: x64
           - name: Analyze code
             run: flutter analyze .
+    flutter_tests:
+        name: flutter tests
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v4
+          - name: Install Flutter
+            uses: subosito/flutter-action@v2
+            with:
+              flutter-version: '3.19.3'
+              channel: stable
+              architecture: x64
+          - name: Install Flutter dependencies
+            run: flutter pub get
+          - name: Flutter tests
+            run: flutter test
+    ios:
+        name: ios tests
+        runs-on: macos-14
+        steps:
+            - name: "List all simulators"
+              run: "xcrun xctrace list devices"
+            - uses: actions/checkout@v4
+            - name: Setup Flutter SDK
+              uses: subosito/flutter-action@v2
+              with:
+                channel: stable
+            - name: Install Flutter dependencies
+              run: flutter pub get
+            - name: Run integration tests
+              run: cd example && flutter test integration_test/app_test.dart --verbose
+    android:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Setup Flutter SDK
+              uses: subosito/flutter-action@v2
+              with:
+                channel: stable
+            - name: Get device name
+              id: device
+              run: |
+                cd example
+                node -e "console.log('AVD_NAME=' + require('./.detoxrc').devices.emulator.device.avdName)" >> $GITHUB_OUTPUT
+            - name: Install Flutter dependencies
+              run: flutter pub get
+            - name: Run integration tests
+              uses: reactivecircus/android-emulator-runner@v2
+              with:
+                api-level: 31
+                arch: x86_64
+                avd-name: ${{ steps.device.outputs.AVD_NAME }}
+                script: cd example && flutter test integration_test --verbose
