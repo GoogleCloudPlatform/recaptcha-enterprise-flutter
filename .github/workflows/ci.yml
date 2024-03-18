@@ -47,6 +47,10 @@ jobs:
                 channel: stable
             - name: Install Flutter dependencies
               run: flutter pub get
+            - name: Write sitekeys to file
+              env:
+                EXAMPLE_DEV_JSON: ${{ secrets.EXAMPLE_DEV_JSON }}
+              run: echo "$EXAMPLE_DEV_JSON" >> example/assets/config/dev.json
             - name: Run integration tests
               run: cd example && flutter test integration_test/app_test.dart --verbose
     android:
@@ -59,6 +63,10 @@ jobs:
                 channel: stable
             - name: Install Flutter dependencies
               run: flutter pub get
+            - name: Write sitekeys to file
+              env:
+                EXAMPLE_DEV_JSON: ${{ secrets.EXAMPLE_DEV_JSON }}
+              run: echo "$EXAMPLE_DEV_JSON" >> example/assets/config/dev.json
             - name: Run integration tests
               uses: reactivecircus/android-emulator-runner@v2
               with:
