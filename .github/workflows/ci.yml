@@ -1,0 +1,24 @@
+name: CI
+
+on:
+    push:
+      branches:
+        - main
+    pull_request:
+      branches:
+        - main
+  
+jobs:
+    analysis:
+        name: format
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v3
+          - name: Install Flutter
+            uses: subosito/flutter-action@v2
+            with:
+              flutter-version: '3.19.3'
+              channel: 'stable'
+              architecture: x64
+          - name: Analyze code
+            run: flutter analyze .
