@@ -55,9 +55,9 @@ jobs:
                 EXAMPLE_DEV_JSON: ${{ secrets.EXAMPLE_DEV_JSON }}
               run: echo "$EXAMPLE_DEV_JSON" >> example/assets/config/dev.json
             - name: Run integration tests
-              run: cd example && flutter test integration_test/app_test.dart --verbose
+              run: cd example && flutter test integration_test/app_test.dart
     android:
-        runs-on: macos-14
+        runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
             - name: Setup Flutter SDK
@@ -75,4 +75,4 @@ jobs:
               with:
                 api-level: 31
                 arch: x86_64
-                script: cd example && flutter test integration_test --verbose
+                script: cd example && flutter test integration_test/app_test.dart
