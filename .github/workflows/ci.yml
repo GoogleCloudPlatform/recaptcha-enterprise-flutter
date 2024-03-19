@@ -58,6 +58,9 @@ jobs:
               run: cd example && flutter test integration_test/app_test.dart
     android:
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+              api-level: [31]
         steps:
             - uses: actions/checkout@v4
             - name: Setup Flutter SDK
@@ -98,7 +101,7 @@ jobs:
             - name: Run integration tests
               uses: reactivecircus/android-emulator-runner@v2
               with:
-                api-level: 31
+                api-level: ${{ matrix.api-level }}
                 arch: x86_64
                 profile: Nexus 6      
                 script: cd example && flutter build apk && flutter install && flutter test integration_test/app_test.dart --timeout none
