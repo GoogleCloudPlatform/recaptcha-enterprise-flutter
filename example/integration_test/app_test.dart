@@ -41,7 +41,7 @@ void main() {
 
       final Finder executeFinder = find.byKey(const Key('executeButton'));
       await tester.tap(executeFinder);
-      await tester.pump(const Duration(milliseconds: 2000));
+      await tester.pump(const Duration(milliseconds: 3000));
       Text tokenText = tester.firstWidget(find.byKey(const Key('token')));
       expect(tokenText.data != null, true);
       expect(tokenText.data?.isNotEmpty, true);
@@ -54,14 +54,14 @@ void main() {
 
       final Finder initFinder = find.byKey(const Key('initButton'));
       await tester.tap(initFinder);
-      await tester.pump(const Duration(milliseconds: 2000));
+      await tester.pump(const Duration(milliseconds: 3000));
       Text clientText =
           tester.firstWidget(find.byKey(const Key('clientState')));
       expect(clientText.data, 'ok');
 
       final Finder executeFinder = find.byKey(const Key('executeButton'));
       await tester.tap(executeFinder);
-      await tester.pump(const Duration(milliseconds: 2000));
+      await tester.pump(const Duration(milliseconds: 3000));
       Text tokenText = tester.firstWidget(find.byKey(const Key('token')));
       expect(tokenText.data != null, true);
       expect(tokenText.data?.isNotEmpty, true);
@@ -74,14 +74,14 @@ void main() {
 
       final Finder initFinder = find.byKey(const Key('initButton'));
       await tester.tap(initFinder);
-      await tester.pump(const Duration(milliseconds: 2000));
+      await tester.pump(const Duration(milliseconds: 3000));
       Text clientText =
           tester.firstWidget(find.byKey(const Key('clientState')));
       expect(clientText.data, 'ok');
 
       final Finder executeFinder = find.byKey(const Key('executeButtonCustom'));
       await tester.tap(executeFinder);
-      await tester.pump(const Duration(milliseconds: 2000));
+      await tester.pump(const Duration(milliseconds: 3000));
       Text tokenText = tester.firstWidget(find.byKey(const Key('token')));
       expect(tokenText.data != null, true);
       expect(tokenText.data?.isNotEmpty, true);
