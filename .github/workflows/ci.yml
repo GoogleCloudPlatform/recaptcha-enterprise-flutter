@@ -54,6 +54,16 @@ jobs:
               env:
                 EXAMPLE_DEV_JSON: ${{ secrets.EXAMPLE_DEV_JSON }}
               run: echo "$EXAMPLE_DEV_JSON" >> example/assets/config/dev.json
+            - name: Cache Example CocoaPods
+              id: cache-example-cocoapods
+              uses: actions/cache@v3
+              with:
+                path: example/ios/Pods
+                key: ${{ runner.os }}-example-pods-${{ hashFiles('example/ios/Podfile.lock') }}
+                restore-keys: |
+                  ${{ runner.os }}-example-pods-
+            - name: Install Example CocoaPods
+              run: cd example/ios ; pod install
             - name: Run integration tests
               run: cd example && flutter test integration_test/app_test.dart
     android:
