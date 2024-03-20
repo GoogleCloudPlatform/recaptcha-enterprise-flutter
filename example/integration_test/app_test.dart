@@ -33,7 +33,7 @@ void main() {
       expect(tokenText.data, 'NO TOKEN');
     });
 
-    // TODO: This test has to be run before any tests that run init because of
+    // NOTE: This test has to be run before any tests that run init because of
     // hot reloading. Need to actually restart app to clear state.
     testWidgets('execute fails without init', (tester) async {
       app.main();

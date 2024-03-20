@@ -41,3 +41,7 @@ linter:
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
+analyzer:
+  errors:
+      asset_does_not_exist: ignore # force users to configure dev.json first
+
