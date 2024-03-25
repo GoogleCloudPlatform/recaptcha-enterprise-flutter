@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'recaptcha_enterprise_flutter'
-  s.version          = '18.4.2'
+  s.version          = '18.5.0-beta02'
   s.summary          = 'reCAPTCHA Enterprise Flutter plugin'
   s.description      = <<-DESC
   reCAPTCHA Enterprise Flutter plugin
@@ -16,8 +16,8 @@ Pod::Spec.new do |s|
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'RecaptchaEnterprise', '=18.4.2'
-  s.platform = :ios, '11.0'
+  s.dependency 'RecaptchaEnterprise', '=18.5.0-beta02'
+  s.platform = :ios, '12.0'
   s.static_framework = true
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
