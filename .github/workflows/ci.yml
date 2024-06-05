@@ -38,7 +38,7 @@ jobs:
             run: flutter test
     ios:
         name: ios tests
-        runs-on: macos-14
+        runs-on: macos-14-xlarge
         steps:
             - uses: actions/checkout@v4
             - name: Setup Flutter SDK
