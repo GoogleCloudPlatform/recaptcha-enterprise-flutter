@@ -36,76 +36,98 @@ public class SwiftRecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
     }
   }
 
-  private func initClient(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+  private func initClient(
+    _ call: FlutterMethodCall, result: @escaping FlutterResult
+  ) {
     guard let args = call.arguments as? [String: Any],
       let siteKey = args["siteKey"] as? String
     else {
       result(
-        FlutterError.init(code: "FL_INIT_FAILED", message: "Missing site key", details: nil))
+        FlutterError.init(
+          code: "FL_INIT_FAILED", message: "Missing site key", details: nil))
       return
     }
 
-    var getClientClosure: (RecaptchaClient?, Error?) -> Void = { recaptchaClient, error in
+    var getClientClosure: (RecaptchaClient?, Error?) -> Void = {
+      recaptchaClient, error in
       if let recaptchaClient = recaptchaClient {
         self.recaptchaClient = recaptchaClient
         result(true)
       } else if let error = error {
         guard let error = error as? RecaptchaError else {
-          FlutterError.init(code: "FL_CAST_ERROR", message: "Not a RecaptchaError", details: nil)
+          FlutterError.init(
+            code: "FL_CAST_ERROR", message: "Not a RecaptchaError", details: nil
+          )
           return
         }
         result(
-          FlutterError.init(code: String(error.code), message: error.errorMessage, details: nil)
+          FlutterError.init(
+            code: String(error.code), message: error.errorMessage, details: nil)
         )
       }
     }
 
-    if let args = call.arguments as? [String: Any], let timeout = args["timeout"] as? Double {
-      Recaptcha.getClient(withSiteKey: siteKey, withTimeout: timeout, completion: getClientClosure)
+    if let args = call.arguments as? [String: Any],
+      let timeout = args["timeout"] as? Double
+    {
+      Recaptcha.getClient(
+        withSiteKey: siteKey, withTimeout: timeout, completion: getClientClosure
+      )
     } else {
       Recaptcha.getClient(withSiteKey: siteKey, completion: getClientClosure)
     }
   }
 
-  private func execute(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+  private func execute(
+    _ call: FlutterMethodCall, result: @escaping FlutterResult
+  ) {
     guard let client = recaptchaClient else {
       result(
         FlutterError.init(
-          code: "FL_EXECUTE_FAILED", message: "Initialize client first", details: nil))
+          code: "FL_EXECUTE_FAILED", message: "Initialize client first",
+          details: nil))
       return
     }
 
-    if let args = call.arguments as? [String: Any],
+    guard let args = call.arguments as? [String: Any],
       let actionStr = args["action"] as? String
-    {
-      let action = mapAction(actionStr)
-
-      let executeClosure: (String?, Error?) -> Void = { token, error -> Void in
-        if let token = token {
-          result(token)
-        } else if let error = error {
-          guard let error = error as? RecaptchaError else {
-            FlutterError.init(code: "FL_CAST_ERROR", message: "Not a RecaptchaError", details: nil)
-            return
-          }
-          result(
-            FlutterError.init(code: String(error.code), message: error.errorMessage, details: nil)
-          )
-        }
-      }
-
-      if let args = call.arguments as? [String: Any], let timeout = args["timeout"] as? Double {
-        client.execute(withAction: action, withTimeout: timeout, completion: executeClosure)
-      } else {
-        client.execute(withAction: action, completion: executeClosure)
-      }
-    } else {
+    else {
       result(
-        FlutterError.init(code: "FL_EXECUTE_FAILED", message: "Missing action", details: nil))
+        FlutterError.init(
+          code: "FL_EXECUTE_FAILED", message: "Missing action", details: nil))
+      return
     }
+
+    let action = mapAction(actionStr)
+
+    let executeClosure: (String?, Error?) -> Void = { token, error -> Void in
+      if let token = token {
+        result(token)
+      } else if let error = error {
+        guard let error = error as? RecaptchaError else {
+          FlutterError.init(
+            code: "FL_CAST_ERROR", message: "Not a RecaptchaError", details: nil
+          )
+          return
+        }
+        result(
+          FlutterError.init(
+            code: String(error.code), message: error.errorMessage, details: nil)
+        )
+      }
+    }
+
+    if let timeout = args["timeout"] as? Double {
+      client.execute(
+        withAction: action, withTimeout: timeout, completion: executeClosure)
+    } else {
+      client.execute(withAction: action, completion: executeClosure)
+    }
+
   }
 
-  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult)
+  {
     if "initClient" == call.method {
       initClient(call, result: result)
     } else if "execute" == call.method {

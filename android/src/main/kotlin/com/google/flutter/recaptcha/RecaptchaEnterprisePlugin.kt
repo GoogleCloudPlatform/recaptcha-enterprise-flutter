@@ -38,7 +38,7 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
   private lateinit var application: Application
 
   override fun onAttachedToEngine(
-    @NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding
+    @NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding,
   ) {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "recaptcha_enterprise")
     channel.setMethodCallHandler(this)
@@ -63,9 +63,9 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
     if (siteKey != null) {
       GlobalScope.launch {
         let {
-            if (timeout != null) Recaptcha.getClient(application, siteKey, timeout.toLong())
-            else Recaptcha.getClient(application, siteKey)
-          }
+          if (timeout != null) Recaptcha.getClient(application, siteKey, timeout.toLong())
+          else Recaptcha.getClient(application, siteKey)
+        }
           .onSuccess { client ->
             recaptchaClient = client
             result.success(true)
