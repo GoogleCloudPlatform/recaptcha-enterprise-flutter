@@ -14,16 +14,18 @@
 
 import 'api_type.dart';
 import 'recaptcha_enterprise_platform_interface.dart';
-import 'recaptcha_action.dart';
+import 'recaptcha_client.dart';
 
-class RecaptchaEnterprise {
-  static Future<bool> initClient(String siteKey, {double? timeout}) {
-    return RecaptchaEnterprisePlatform.instance
-        .initClient(siteKey, InitApiType.getClient, timeout: timeout);
-  }
+/// Entry point for the Recaptcha APIS
+class Recaptcha {
 
-  static Future<String> execute(RecaptchaAction action, {double? timeout}) {
+  /// Returns a [RecaptchaClient] associated with the [siteKey] to access all
+  /// reCAPTCHA APIs. It uses the fetchClient API that has built-in retries.
+  static Future<RecaptchaClient> fetchClient(String siteKey) async {
     return RecaptchaEnterprisePlatform.instance
-        .execute(action.action, timeout: timeout);
+        .initClient(siteKey, InitApiType.fetchClient)
+        .then((_) {
+      return RecaptchaClient();
+    });
   }
 }

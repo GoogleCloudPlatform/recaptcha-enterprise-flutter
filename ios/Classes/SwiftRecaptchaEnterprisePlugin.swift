@@ -67,7 +67,9 @@ public class SwiftRecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
       }
     }
 
-    if let timeout = args["timeout"] as? Double {
+    if let apiType = args["apiType"] as? String, apiType == "fetchClient" {
+      Recaptcha.fetchClient(withSiteKey: siteKey, completion: getClientClosure)
+    } else if let timeout = args["timeout"] as? Double {
       Recaptcha.getClient(
         withSiteKey: siteKey, withTimeout: timeout, completion: getClientClosure
       )

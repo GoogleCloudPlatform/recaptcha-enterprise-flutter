@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'api_type.dart';
 import 'recaptcha_enterprise_platform_interface.dart';
 import 'recaptcha_action.dart';
 
-class RecaptchaEnterprise {
-  static Future<bool> initClient(String siteKey, {double? timeout}) {
-    return RecaptchaEnterprisePlatform.instance
-        .initClient(siteKey, InitApiType.getClient, timeout: timeout);
-  }
+/// A client that enables Flutter Apps to trigger reCAPTCHA Enterprise.
+class RecaptchaClient {
 
+  /// Executes reCAPTCHA Enterprise on a user [action].
+  /// It is suggested the usage of 10 seconds for the [timeout]. The minimum
+  /// value is 5 seconds.
   static Future<String> execute(RecaptchaAction action, {double? timeout}) {
     return RecaptchaEnterprisePlatform.instance
         .execute(action.action, timeout: timeout);

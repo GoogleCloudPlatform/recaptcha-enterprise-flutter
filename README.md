@@ -30,18 +30,26 @@ Start an emulator, e.g. `open -a Simulator` or
 
 ### Run app:
 
-```
+```bash
 cd example && flutter run
 ```
 
 ### Run unit tests:
 
-```
+```bash
 flutter test
 ```
 
 ### Running Integration Tests
 
-```
+```bash
 cd example && flutter test integration_test/app_test.dart
+```
+
+## Swift
+
+To format the code run the command:
+
+```bash
+swift-format -i -r ./ --configuration swift_format_config.json
 ```

@@ -59,18 +59,26 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
     }
     val siteKey = call.argument<String>("siteKey")
     val timeout = call.argument<Double>("timeout")
+    val apiType = call.argument<String>("apiType")
 
     if (siteKey != null) {
       GlobalScope.launch {
-        let {
-          if (timeout != null) Recaptcha.getClient(application, siteKey, timeout.toLong())
-          else Recaptcha.getClient(application, siteKey)
-        }
-          .onSuccess { client ->
-            recaptchaClient = client
-            result.success(true)
+        if (apiType != null && apiType == "fetchClient") {
+          recaptchaClient = Recaptcha.fetchClient(application, siteKey)
+          result.success(true)
+        }else {
+          let {
+            if (timeout != null) Recaptcha.getClient(application, siteKey, timeout.toLong())
+            else Recaptcha.getClient(application, siteKey)
           }
-          .onFailure { exception -> result.error("FL_INIT_FAILED", exception.toString(), null) }
+            .onSuccess { client ->
+              recaptchaClient = client
+              result.success(true)
+            }
+            .onFailure { exception ->
+              result.error("FL_INIT_FAILED", exception.toString(), null)
+            }
+        }
       }
     }
   }
