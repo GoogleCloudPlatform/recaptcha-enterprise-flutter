@@ -15,6 +15,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
+import 'api_type.dart';
 import 'recaptcha_enterprise_platform_interface.dart';
 
 // An implementation of [RecaptchaEnterprisePlatform] that uses method channels.
@@ -24,12 +25,14 @@ class MethodChannelRecaptchaEnterprise extends RecaptchaEnterprisePlatform {
   final methodChannel = const MethodChannel('recaptcha_enterprise');
 
   @override
-  Future<bool> initClient(String siteKey, {double? timeout}) async {
+  Future<bool> initClient(String siteKey, InitApiType apiType, {double? timeout}) async {
     Map<String, dynamic> opts = {'siteKey': siteKey};
 
     if (timeout != null) {
       opts['timeout'] = timeout;
     }
+
+    opts['apiType'] = apiType.name;
 
     return await methodChannel.invokeMethod('initClient', opts);
   }

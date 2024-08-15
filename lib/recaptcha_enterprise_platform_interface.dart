@@ -14,6 +14,7 @@
 
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
+import 'api_type.dart';
 import 'recaptcha_enterprise_method_channel.dart';
 
 abstract class RecaptchaEnterprisePlatform extends PlatformInterface {
@@ -38,7 +39,7 @@ abstract class RecaptchaEnterprisePlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<bool> initClient(String siteKey, {double? timeout}) {
+  Future<bool> initClient(String siteKey, InitApiType apiType, {double? timeout}) {
     throw UnimplementedError('initClient() has not been implemented.');
   }
 

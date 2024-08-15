@@ -14,6 +14,7 @@
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:recaptcha_enterprise_flutter/api_type.dart';
 import 'package:recaptcha_enterprise_flutter/recaptcha_enterprise_method_channel.dart';
 
 void main() {
@@ -41,11 +42,11 @@ void main() {
   });
 
   test('initClient', () async {
-    expect(await platform.initClient('FAKE_SITEKEY'), true);
+    expect(await platform.initClient('FAKE_SITEKEY', InitApiType.getClient), true);
   });
 
   test('initClientTimeout', () async {
-    expect(await platform.initClient('FAKE_SITEKEY', timeout: 5000), true);
+    expect(await platform.initClient('FAKE_SITEKEY',InitApiType.getClient, timeout: 5000), true);
   });
 
   test('execute', () async {
