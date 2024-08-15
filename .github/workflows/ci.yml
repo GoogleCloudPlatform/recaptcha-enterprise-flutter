@@ -38,9 +38,15 @@ jobs:
             run: flutter test
     ios:
         name: ios tests
-        runs-on: macos-14
+        runs-on: macos-14-xlarge
         steps:
             - uses: actions/checkout@v4
+
+            - name: Select xcode version
+              uses: maxim-lobanov/setup-xcode@v1
+              with:
+                xcode-version: '15.3'
+                
             - name: Setup Flutter SDK
               uses: subosito/flutter-action@v2
               with:
