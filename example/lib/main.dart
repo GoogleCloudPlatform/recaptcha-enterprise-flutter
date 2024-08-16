@@ -43,20 +43,15 @@ class _MyAppState extends State<MyApp> {
   String _clientState = "NOT INITIALIZED";
   String _token = "NO TOKEN";
   RecaptchaClient? _client;
-  late String _siteKey;
-
-  _MyAppState() {
-    _siteKey = Platform.isAndroid
-        ? widget.config.androidSiteKey
-        : widget.config.iosSiteKey;
-  }
 
   void initClient() async {
     var result = false;
     var errorMessage = "failure";
 
+    var siteKey = _getSiteKey();
+
     try {
-      result = await RecaptchaEnterprise.initClient(_siteKey, timeout: 10000);
+      result = await RecaptchaEnterprise.initClient(siteKey, timeout: 10000);
     } on PlatformException catch (err) {
       debugPrint('Caught platform exception on init: $err');
       errorMessage = 'Code: ${err.code} Message ${err.message}';
@@ -70,12 +65,20 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  String _getSiteKey() {
+    return Platform.isAndroid
+        ? widget.config.androidSiteKey
+        : widget.config.iosSiteKey;
+  }
+
   void fetchClient() async {
     var errorMessage = "failure";
     var result = false;
 
+    var siteKey = _getSiteKey();
+
     try {
-      _client = await Recaptcha.fetchClient(_siteKey);
+      _client = await Recaptcha.fetchClient(siteKey);
       result = true;
     } on PlatformException catch (err) {
       debugPrint('Caught platform exception on init: $err');
@@ -171,36 +174,6 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
           TextButton(
-              onPressed: () {
-                fetchClient();
-              },
-              key: const Key('initClient'),
-              child: Container(
-                color: Colors.lightBlue,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                child: const Text(
-                  'InitClient',
-                  style: TextStyle(color: Colors.white, fontSize: 13.0),
-                ),
-              ))
-        ]),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          TextButton(
-            onPressed: () {
-              executeWithFetchClient();
-            },
-            key: const Key('executeFetchButton'),
-            child: Container(
-              color: Colors.lightBlue,
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              child: const Text(
-                'ExecuteFetch',
-                style: TextStyle(color: Colors.white, fontSize: 13.0),
-              ),
-            ),
-          ),
-          TextButton(
             onPressed: () {
               execute();
             },
@@ -224,6 +197,36 @@ class _MyAppState extends State<MyApp> {
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               child: const Text(
                 'ExecuteCustom',
+                style: TextStyle(color: Colors.white, fontSize: 13.0),
+              ),
+            ),
+          ),
+        ]),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          TextButton(
+              onPressed: () {
+                fetchClient();
+              },
+              key: const Key('initClient'),
+              child: Container(
+                color: Colors.lightBlue,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                child: const Text(
+                  'InitClient',
+                  style: TextStyle(color: Colors.white, fontSize: 13.0),
+                ),
+              )),
+          TextButton(
+            onPressed: () {
+              executeWithFetchClient();
+            },
+            key: const Key('executeFetchButton'),
+            child: Container(
+              color: Colors.lightBlue,
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              child: const Text(
+                'ExecuteFetch',
                 style: TextStyle(color: Colors.white, fontSize: 13.0),
               ),
             ),
