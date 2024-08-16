@@ -14,22 +14,28 @@
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:recaptcha_enterprise_flutter/api_type.dart';
 import 'package:recaptcha_enterprise_flutter/recaptcha_enterprise_method_channel.dart';
 
 void main() {
   var platform = MethodChannelRecaptchaEnterprise();
   const channel = MethodChannel('recaptcha_enterprise');
   dynamic args;
+  dynamic apiCalled;
 
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() {
+    apiCalled = 'none';
+
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
+      args = methodCall.arguments;
+      apiCalled = methodCall.method;
+
       switch (methodCall.method) {
         case 'initClient':
-          args = methodCall.arguments;
+          return true;
+        case 'fetchClient':
           return true;
         case 'execute':
           return 'token';
@@ -46,29 +52,28 @@ void main() {
 
   test('initClient', () async {
     var initResult = await platform.initClient(
-        'FAKE_SITEKEY', InitApiType.getClient);
+        'FAKE_SITEKEY');
     expect(initResult, true);
-    expect(args["apiType"], "getClient");
     expect(args["siteKey"], "FAKE_SITEKEY");
     expect(args["timeout"], null);
+    expect(apiCalled, 'initClient');
   });
 
   test('initClientTimeout', () async {
     var initResult = await platform.initClient(
-        'FAKE_SITEKEY', InitApiType.getClient, timeout: 5000);
+        'FAKE_SITEKEY', timeout: 5000);
     expect(initResult, true);
-    expect(args["apiType"], "getClient");
     expect(args["siteKey"], "FAKE_SITEKEY");
     expect(args["timeout"], 5000);
+    expect(apiCalled, 'initClient');
+
   });
 
-  test('initClient_withFetchClientAPI', () async {
-    var initResult = await platform.initClient(
-        'FAKE_SITEKEY', InitApiType.fetchClient);
-    expect(initResult, true);
-    expect(args["apiType"], "fetchClient");
+  test('fetchClient', () async {
+    var fetchClientResult = await platform.fetchClient('FAKE_SITEKEY');
+    expect(fetchClientResult, true);
     expect(args["siteKey"], "FAKE_SITEKEY");
-    expect(args["timeout"], null);
+    expect(apiCalled, 'fetchClient');
   });
 
   test('execute', () async {

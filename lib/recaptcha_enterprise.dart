@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'api_type.dart';
 import 'recaptcha_enterprise_platform_interface.dart';
 import 'recaptcha_action.dart';
 
 class RecaptchaEnterprise {
   static Future<bool> initClient(String siteKey, {double? timeout}) {
     return RecaptchaEnterprisePlatform.instance
-        .initClient(siteKey, InitApiType.getClient, timeout: timeout);
+        .initClient(siteKey, timeout: timeout);
   }
 
   static Future<String> execute(RecaptchaAction action, {double? timeout}) {

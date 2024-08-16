@@ -36,19 +36,10 @@ public class SwiftRecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
     }
   }
 
-  private func initClient(
-    _ call: FlutterMethodCall, result: @escaping FlutterResult
-  ) {
-    guard let args = call.arguments as? [String: Any],
-      let siteKey = args["siteKey"] as? String
-    else {
-      result(
-        FlutterError.init(
-          code: "FL_INIT_FAILED", message: "Missing site key", details: nil))
-      return
-    }
-
-    var getClientClosure: (RecaptchaClient?, Error?) -> Void = {
+  private func createGetClientHandler(_ result: @escaping FlutterResult) -> (
+    RecaptchaClient?, Error?
+  ) -> Void {
+    let getClientClosure: (RecaptchaClient?, Error?) -> Void = {
       recaptchaClient, error in
       if let recaptchaClient = recaptchaClient {
         self.recaptchaClient = recaptchaClient
@@ -66,10 +57,40 @@ public class SwiftRecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
         )
       }
     }
+    return getClientClosure
+  }
 
-    if let apiType = args["apiType"] as? String, apiType == "fetchClient" {
-      Recaptcha.fetchClient(withSiteKey: siteKey, completion: getClientClosure)
-    } else if let timeout = args["timeout"] as? Double {
+  private func fetchClient(
+    _ call: FlutterMethodCall, result: @escaping FlutterResult
+  ) {
+    guard let args = call.arguments as? [String: Any],
+      let siteKey = args["siteKey"] as? String
+    else {
+      result(
+        FlutterError.init(
+          code: "FL_INIT_FAILED", message: "Missing site key", details: nil))
+      return
+    }
+
+    Recaptcha.fetchClient(
+      withSiteKey: siteKey, completion: createGetClientHandler(result))
+  }
+
+  private func initClient(
+    _ call: FlutterMethodCall, result: @escaping FlutterResult
+  ) {
+    guard let args = call.arguments as? [String: Any],
+      let siteKey = args["siteKey"] as? String
+    else {
+      result(
+        FlutterError.init(
+          code: "FL_INIT_FAILED", message: "Missing site key", details: nil))
+      return
+    }
+
+    let getClientClosure = createGetClientHandler(result)
+
+    if let timeout = args["timeout"] as? Double {
       Recaptcha.getClient(
         withSiteKey: siteKey, withTimeout: timeout, completion: getClientClosure
       )
@@ -128,11 +149,14 @@ public class SwiftRecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult)
   {
-    if "initClient" == call.method {
+    switch call.method {
+    case "initClient":
       initClient(call, result: result)
-    } else if "execute" == call.method {
+    case "fetchClient":
+      fetchClient(call, result: result)
+    case "execute":
       execute(call, result: result)
-    } else {
+    default:
       result(FlutterMethodNotImplemented)
     }
   }

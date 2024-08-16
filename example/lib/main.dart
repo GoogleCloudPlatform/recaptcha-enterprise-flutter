@@ -163,12 +163,12 @@ class _MyAppState extends State<MyApp> {
             onPressed: () {
               initClient();
             },
-            key: const Key('initButton'),
+            key: const Key('getClient'),
             child: Container(
               color: Colors.green,
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
               child: const Text(
-                'Init',
+                'GetClient',
                 style: TextStyle(color: Colors.white, fontSize: 13.0),
               ),
             ),
@@ -180,9 +180,9 @@ class _MyAppState extends State<MyApp> {
             key: const Key('executeButton'),
             child: Container(
               color: Colors.green,
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
               child: const Text(
-                'Execute',
+                'ExecuteGet',
                 style: TextStyle(color: Colors.white, fontSize: 13.0),
               ),
             ),
@@ -194,9 +194,9 @@ class _MyAppState extends State<MyApp> {
             key: const Key('executeButtonCustom'),
             child: Container(
               color: Colors.green,
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
               child: const Text(
-                'ExecuteCustom',
+                'ExecuteGetCustom',
                 style: TextStyle(color: Colors.white, fontSize: 13.0),
               ),
             ),
@@ -207,13 +207,13 @@ class _MyAppState extends State<MyApp> {
               onPressed: () {
                 fetchClient();
               },
-              key: const Key('initClient'),
+              key: const Key('fetchClient'),
               child: Container(
                 color: Colors.lightBlue,
                 padding:
                     const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 child: const Text(
-                  'InitClient',
+                  'FetchClient',
                   style: TextStyle(color: Colors.white, fontSize: 13.0),
                 ),
               )),

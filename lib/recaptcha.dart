@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'api_type.dart';
 import 'recaptcha_enterprise_platform_interface.dart';
 import 'recaptcha_client.dart';
 
@@ -22,7 +21,7 @@ class Recaptcha {
   /// reCAPTCHA APIs. It uses the fetchClient API that has built-in retries.
   static Future<RecaptchaClient> fetchClient(String siteKey) async {
     return RecaptchaEnterprisePlatform.instance
-        .initClient(siteKey, InitApiType.fetchClient)
+        .fetchClient(siteKey)
         .then((_) {
       return RecaptchaClient();
     });

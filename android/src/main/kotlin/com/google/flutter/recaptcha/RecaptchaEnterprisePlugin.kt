@@ -52,6 +52,26 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
     }
   }
 
+  private fun fetchClient(@NonNull call: MethodCall, @NonNull result: Result) {
+    if (application == null) {
+      result.error("FL_INIT_FAILED", "No application registered", null)
+      return
+    }
+
+    val siteKey = call.argument<String>("siteKey")
+
+    if (siteKey != null) {
+      GlobalScope.launch {
+        try {
+          recaptchaClient = Recaptcha.fetchClient(application, siteKey)
+          result.success(true)
+        } catch (exception: Exception) {
+          result.error("FL_INIT_FAILED", exception.toString(), null)
+        }
+      }
+    }
+  }
+
   private fun initClient(@NonNull call: MethodCall, @NonNull result: Result) {
     if (application == null) {
       result.error("FL_INIT_FAILED", "No application registered", null)
@@ -59,26 +79,21 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
     }
     val siteKey = call.argument<String>("siteKey")
     val timeout = call.argument<Double>("timeout")
-    val apiType = call.argument<String>("apiType")
 
     if (siteKey != null) {
       GlobalScope.launch {
-        if (apiType != null && apiType == "fetchClient") {
-          recaptchaClient = Recaptcha.fetchClient(application, siteKey)
-          result.success(true)
-        }else {
-          let {
-            if (timeout != null) Recaptcha.getClient(application, siteKey, timeout.toLong())
-            else Recaptcha.getClient(application, siteKey)
-          }
-            .onSuccess { client ->
-              recaptchaClient = client
-              result.success(true)
-            }
-            .onFailure { exception ->
-              result.error("FL_INIT_FAILED", exception.toString(), null)
-            }
+
+        let {
+          if (timeout != null) Recaptcha.getClient(application, siteKey, timeout.toLong())
+          else Recaptcha.getClient(application, siteKey)
         }
+          .onSuccess { client ->
+            recaptchaClient = client
+            result.success(true)
+          }
+          .onFailure { exception ->
+            result.error("FL_INIT_FAILED", exception.toString(), null)
+          }
       }
     }
   }
@@ -109,6 +124,7 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
     when (call.method) {
       "initClient" -> initClient(call, result)
       "execute" -> execute(call, result)
+      "fetchClient" -> fetchClient(call, result)
       else -> result.notImplemented()
     }
   }

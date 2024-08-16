@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:recaptcha_enterprise_flutter/api_type.dart';
 import 'package:recaptcha_enterprise_flutter/recaptcha_enterprise.dart';
 import 'package:recaptcha_enterprise_flutter/recaptcha_enterprise_platform_interface.dart';
 import 'package:recaptcha_enterprise_flutter/recaptcha_enterprise_method_channel.dart';
@@ -24,8 +23,11 @@ class MockRecaptchaEnterprisePlatform
     with MockPlatformInterfaceMixin
     implements RecaptchaEnterprisePlatform {
   @override
-  Future<bool> initClient(String siteKey, InitApiType apiType, {double? timeout}) =>
+  Future<bool> initClient(String siteKey, {double? timeout}) =>
       Future.value(true);
+
+  @override
+  Future<bool> fetchClient(String siteKey) => Future.value(true);
 
   @override
   Future<String> execute(String action, {double? timeout}) =>

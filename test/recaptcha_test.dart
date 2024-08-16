@@ -21,15 +21,21 @@ import 'package:recaptcha_enterprise_flutter/recaptcha_client.dart';
 void main() {
   const channel = MethodChannel('recaptcha_enterprise');
   dynamic args;
+  dynamic apiCalled;
 
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() {
+    apiCalled = 'none';
+
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
+      args = methodCall.arguments;
+      apiCalled = methodCall.method;
       switch (methodCall.method) {
         case 'initClient':
-          args = methodCall.arguments;
+          return true;
+        case 'fetchClient':
           return true;
         case 'execute':
           return 'token';
@@ -46,7 +52,7 @@ void main() {
 
   test('fetchClient_returningClient', () async {
     expect(await Recaptcha.fetchClient('FAKE_SITEKEY'), isA<RecaptchaClient>());
-    expect(args["apiType"], "fetchClient");
     expect(args["siteKey"], "FAKE_SITEKEY");
+    expect(apiCalled,'fetchClient');
   });
 }
