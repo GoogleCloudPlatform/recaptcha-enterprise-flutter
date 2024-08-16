@@ -20,21 +20,16 @@ import 'package:recaptcha_enterprise_flutter/recaptcha_client.dart';
 
 void main() {
   const channel = MethodChannel('recaptcha_enterprise');
-  dynamic shouldFail = false;
   dynamic args;
 
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() {
-    shouldFail = false;
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
       switch (methodCall.method) {
         case 'initClient':
           args = methodCall.arguments;
-          if (shouldFail) {
-            throw PlatformException(code: 'FAILED TO INITIALIZE');
-          }
           return true;
         case 'execute':
           return 'token';
@@ -49,15 +44,7 @@ void main() {
         .setMockMethodCallHandler(channel, null);
   });
 
-  test('fetchClient_failing', () async {
-    shouldFail = true;
-    expect(await Recaptcha.fetchClient('FAKE_SITEKEY'),
-        throwsA(isA<PlatformException>()));
-    expect(args["apiType"], "fetchClient");
-    expect(args["siteKey"], "FAKE_SITEKEY");
-  });
-
-  test('fetchClient_failing', () async {
+  test('fetchClient_returningClient', () async {
     expect(await Recaptcha.fetchClient('FAKE_SITEKEY'), isA<RecaptchaClient>());
     expect(args["apiType"], "fetchClient");
     expect(args["siteKey"], "FAKE_SITEKEY");

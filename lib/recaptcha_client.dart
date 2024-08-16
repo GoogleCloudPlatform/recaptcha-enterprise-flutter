@@ -21,7 +21,7 @@ class RecaptchaClient {
   /// Executes reCAPTCHA Enterprise on a user [action].
   /// It is suggested the usage of 10 seconds for the [timeout]. The minimum
   /// value is 5 seconds.
-  static Future<String> execute(RecaptchaAction action, {double? timeout}) {
+  Future<String> execute(RecaptchaAction action, {double? timeout}) {
     return RecaptchaEnterprisePlatform.instance
         .execute(action.action, timeout: timeout);
   }

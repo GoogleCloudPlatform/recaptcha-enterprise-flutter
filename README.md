@@ -45,11 +45,3 @@ flutter test
 ```bash
 cd example && flutter test integration_test/app_test.dart
 ```
-
-## Swift
-
-To format the code run the command:
-
-```bash
-swift-format -i -r ./ --configuration swift_format_config.json
-```

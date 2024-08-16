@@ -18,7 +18,6 @@ import 'recaptcha_client.dart';
 
 /// Entry point for the Recaptcha APIS
 class Recaptcha {
-
   /// Returns a [RecaptchaClient] associated with the [siteKey] to access all
   /// reCAPTCHA APIs. It uses the fetchClient API that has built-in retries.
   static Future<RecaptchaClient> fetchClient(String siteKey) async {
