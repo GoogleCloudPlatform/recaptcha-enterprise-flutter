@@ -15,6 +15,7 @@
 import 'recaptcha_enterprise_platform_interface.dart';
 import 'recaptcha_action.dart';
 
+@Deprecated('Use [Recaptcha] class to retrieve a [RecaptchaClient]')
 class RecaptchaEnterprise {
   static Future<bool> initClient(String siteKey, {double? timeout}) {
     return RecaptchaEnterprisePlatform.instance
