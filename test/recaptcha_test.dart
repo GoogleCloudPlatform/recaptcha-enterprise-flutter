@@ -14,10 +14,11 @@
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:recaptcha_enterprise_flutter/recaptcha_enterprise_method_channel.dart';
+
+import 'package:recaptcha_enterprise_flutter/recaptcha.dart';
+import 'package:recaptcha_enterprise_flutter/recaptcha_client.dart';
 
 void main() {
-  var platform = MethodChannelRecaptchaEnterprise();
   const channel = MethodChannel('recaptcha_enterprise');
   dynamic args;
   dynamic apiCalled;
@@ -31,7 +32,6 @@ void main() {
         .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
       args = methodCall.arguments;
       apiCalled = methodCall.method;
-
       switch (methodCall.method) {
         case 'initClient':
           return true;
@@ -50,37 +50,9 @@ void main() {
         .setMockMethodCallHandler(channel, null);
   });
 
-  test('initClient', () async {
-    var initResult = await platform.initClient(
-        'FAKE_SITEKEY');
-    expect(initResult, true);
+  test('fetchClient_returningClient', () async {
+    expect(await Recaptcha.fetchClient('FAKE_SITEKEY'), isA<RecaptchaClient>());
     expect(args["siteKey"], "FAKE_SITEKEY");
-    expect(args["timeout"], null);
-    expect(apiCalled, 'initClient');
-  });
-
-  test('initClientTimeout', () async {
-    var initResult = await platform.initClient(
-        'FAKE_SITEKEY', timeout: 5000);
-    expect(initResult, true);
-    expect(args["siteKey"], "FAKE_SITEKEY");
-    expect(args["timeout"], 5000);
-    expect(apiCalled, 'initClient');
-
-  });
-
-  test('fetchClient', () async {
-    var fetchClientResult = await platform.fetchClient('FAKE_SITEKEY');
-    expect(fetchClientResult, true);
-    expect(args["siteKey"], "FAKE_SITEKEY");
-    expect(apiCalled, 'fetchClient');
-  });
-
-  test('execute', () async {
-    expect(await platform.execute('ACTION'), 'token');
-  });
-
-  test('executeTimeout', () async {
-    expect(await platform.execute('ACTION', timeout: 5000), 'token');
+    expect(apiCalled,'fetchClient');
   });
 }

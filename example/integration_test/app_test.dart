@@ -52,7 +52,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      final Finder initFinder = find.byKey(const Key('initButton'));
+      final Finder initFinder = find.byKey(const Key('getClient'));
       await tester.tap(initFinder);
       await tester.pump(const Duration(milliseconds: 10000));
       Text clientText =
@@ -72,7 +72,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      final Finder initFinder = find.byKey(const Key('initButton'));
+      final Finder initFinder = find.byKey(const Key('getClient'));
       await tester.tap(initFinder);
       await tester.pump(const Duration(milliseconds: 10000));
       Text clientText =
@@ -87,5 +87,46 @@ void main() {
       expect(tokenText.data?.isNotEmpty, true);
       expect(tokenText.data?.toLowerCase().contains('error'), false);
     });
+  });
+
+  group('end-to-end fetch tests', () {
+
+    testWidgets('fetchExecute without init fails', (tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      final Finder executeFinder = find.byKey(const Key('executeFetchButton'));
+      await tester.tap(executeFinder);
+      await tester.pump(const Duration(milliseconds: 2000));
+      Text tokenText = tester.firstWidget(find.byKey(const Key('token')));
+      expect(tokenText.data != null, true);
+      expect(tokenText.data?.isNotEmpty, true);
+      expect(
+          tokenText.data
+              ?.contains('Client not initialized yet, click button InitClient'),
+          true);
+    });
+
+    testWidgets('fetchInit and fetchExecute runs', (tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      final Finder initFinder = find.byKey(const Key('fetchClient'));
+
+      await tester.tap(initFinder);
+      await tester.pump(const Duration(milliseconds: 2000));
+      Text clientText =
+      tester.firstWidget(find.byKey(const Key('clientState')));
+      expect(clientText.data, 'ok');
+
+      final Finder executeFinder = find.byKey(const Key('executeFetchButton'));
+      await tester.tap(executeFinder);
+      await tester.pump(const Duration(milliseconds: 10000));
+      Text tokenText = tester.firstWidget(find.byKey(const Key('token')));
+      expect(tokenText.data != null, true);
+      expect(tokenText.data?.isNotEmpty, true);
+      expect(tokenText.data?.toLowerCase().contains('error'), false);
+    });
+
   });
 }

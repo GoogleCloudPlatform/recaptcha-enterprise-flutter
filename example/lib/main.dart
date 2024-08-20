@@ -15,6 +15,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
+import 'package:recaptcha_enterprise_flutter/recaptcha.dart';
+import 'package:recaptcha_enterprise_flutter/recaptcha_client.dart';
 import 'package:recaptcha_enterprise_flutter/recaptcha_enterprise.dart';
 import 'package:recaptcha_enterprise_flutter/recaptcha_action.dart';
 import 'dart:io' show Platform;
@@ -40,14 +42,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _clientState = "NOT INITIALIZED";
   String _token = "NO TOKEN";
+  RecaptchaClient? _client;
 
   void initClient() async {
-    String siteKey = Platform.isAndroid
-        ? widget.config.androidSiteKey
-        : widget.config.iosSiteKey;
-
     var result = false;
     var errorMessage = "failure";
+
+    var siteKey = _getSiteKey();
 
     try {
       result = await RecaptchaEnterprise.initClient(siteKey, timeout: 10000);
@@ -61,6 +62,53 @@ class _MyAppState extends State<MyApp> {
 
     setState(() {
       _clientState = result ? "ok" : errorMessage;
+    });
+  }
+
+  String _getSiteKey() {
+    return Platform.isAndroid
+        ? widget.config.androidSiteKey
+        : widget.config.iosSiteKey;
+  }
+
+  void fetchClient() async {
+    var errorMessage = "failure";
+    var result = false;
+
+    var siteKey = _getSiteKey();
+
+    try {
+      _client = await Recaptcha.fetchClient(siteKey);
+      result = true;
+    } on PlatformException catch (err) {
+      debugPrint('Caught platform exception on init: $err');
+      errorMessage = 'Code: ${err.code} Message ${err.message}';
+    } catch (err) {
+      debugPrint('Caught exception on init: $err');
+      errorMessage = err.toString();
+    }
+
+    setState(() {
+      _clientState = result ? "ok" : errorMessage;
+    });
+  }
+
+  void executeWithFetchClient() async {
+    String result;
+
+    try {
+      result = await _client?.execute(RecaptchaAction.LOGIN()) ??
+          "Client not initialized yet, click button InitClient";
+    } on PlatformException catch (err) {
+      debugPrint('Caught platform exception on execute: $err');
+      result = 'Code: ${err.code} Message ${err.message}';
+    } catch (err) {
+      debugPrint('Caught exception on execute: $err');
+      result = err.toString();
+    }
+
+    setState(() {
+      _token = result;
     });
   }
 
@@ -115,12 +163,12 @@ class _MyAppState extends State<MyApp> {
             onPressed: () {
               initClient();
             },
-            key: const Key('initButton'),
+            key: const Key('getClient'),
             child: Container(
               color: Colors.green,
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
               child: const Text(
-                'Init',
+                'GetClient',
                 style: TextStyle(color: Colors.white, fontSize: 13.0),
               ),
             ),
@@ -132,9 +180,9 @@ class _MyAppState extends State<MyApp> {
             key: const Key('executeButton'),
             child: Container(
               color: Colors.green,
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
               child: const Text(
-                'Execute',
+                'ExecuteGet',
                 style: TextStyle(color: Colors.white, fontSize: 13.0),
               ),
             ),
@@ -146,9 +194,39 @@ class _MyAppState extends State<MyApp> {
             key: const Key('executeButtonCustom'),
             child: Container(
               color: Colors.green,
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+              child: const Text(
+                'ExecuteGetCustom',
+                style: TextStyle(color: Colors.white, fontSize: 13.0),
+              ),
+            ),
+          ),
+        ]),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          TextButton(
+              onPressed: () {
+                fetchClient();
+              },
+              key: const Key('fetchClient'),
+              child: Container(
+                color: Colors.lightBlue,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                child: const Text(
+                  'FetchClient',
+                  style: TextStyle(color: Colors.white, fontSize: 13.0),
+                ),
+              )),
+          TextButton(
+            onPressed: () {
+              executeWithFetchClient();
+            },
+            key: const Key('executeFetchButton'),
+            child: Container(
+              color: Colors.lightBlue,
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               child: const Text(
-                'ExecuteCustom',
+                'ExecuteFetch',
                 style: TextStyle(color: Colors.white, fontSize: 13.0),
               ),
             ),

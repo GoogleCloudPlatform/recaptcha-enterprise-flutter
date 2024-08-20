@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Flutter
-import UIKit
+import 'recaptcha_enterprise_platform_interface.dart';
+import 'recaptcha_client.dart';
 
-@main
-@objc class AppDelegate: FlutterAppDelegate {
-  override func application(
-    _ application: UIApplication,
-    didFinishLaunchingWithOptions launchOptions: [UIApplication
-      .LaunchOptionsKey: Any]?
-  ) -> Bool {
-    GeneratedPluginRegistrant.register(with: self)
-    return super.application(
-      application, didFinishLaunchingWithOptions: launchOptions)
+/// Entry point for the Recaptcha APIS
+class Recaptcha {
+  /// Returns a [RecaptchaClient] associated with the [siteKey] to access all
+  /// reCAPTCHA APIs. It uses the fetchClient API that has built-in retries.
+  static Future<RecaptchaClient> fetchClient(String siteKey) async {
+    return RecaptchaEnterprisePlatform.instance
+        .fetchClient(siteKey)
+        .then((_) {
+      return RecaptchaClient();
+    });
   }
 }

@@ -46,4 +46,10 @@ class MethodChannelRecaptchaEnterprise extends RecaptchaEnterprisePlatform {
 
     return await methodChannel.invokeMethod('execute', opts);
   }
+
+  @override
+  Future<bool> fetchClient(String siteKey) async {
+    Map<String, dynamic> opts = {'siteKey': siteKey};
+    return await methodChannel.invokeMethod('fetchClient', opts);
+  }
 }

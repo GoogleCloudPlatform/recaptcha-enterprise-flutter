@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Flutter
-import UIKit
+import 'recaptcha_enterprise_platform_interface.dart';
+import 'recaptcha_action.dart';
 
-@main
-@objc class AppDelegate: FlutterAppDelegate {
-  override func application(
-    _ application: UIApplication,
-    didFinishLaunchingWithOptions launchOptions: [UIApplication
-      .LaunchOptionsKey: Any]?
-  ) -> Bool {
-    GeneratedPluginRegistrant.register(with: self)
-    return super.application(
-      application, didFinishLaunchingWithOptions: launchOptions)
+/// A client that enables Flutter Apps to trigger reCAPTCHA Enterprise.
+class RecaptchaClient {
+
+  /// Executes reCAPTCHA Enterprise on a user [action].
+  /// It is suggested the usage of 10 seconds for the [timeout]. The minimum
+  /// value is 5 seconds.
+  Future<String> execute(RecaptchaAction action, {double? timeout}) {
+    return RecaptchaEnterprisePlatform.instance
+        .execute(action.action, timeout: timeout);
   }
 }

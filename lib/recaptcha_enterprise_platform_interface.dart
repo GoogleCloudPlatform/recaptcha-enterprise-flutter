@@ -45,4 +45,8 @@ abstract class RecaptchaEnterprisePlatform extends PlatformInterface {
   Future<String> execute(String action, {double? timeout}) {
     throw UnimplementedError('execute() has not been implemented.');
   }
+
+  Future<bool> fetchClient(String siteKey){
+    throw UnimplementedError('fetchClient() has not been implemented.');
+  }
 }
