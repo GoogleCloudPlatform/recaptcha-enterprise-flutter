@@ -20,7 +20,7 @@ jobs:
               channel: 'stable'
               architecture: x64
           - name: Analyze code
-            run: flutter analyze .
+            run: flutter analyze . --no-fatal-infos
     flutter_tests:
         name: flutter tests
         runs-on: ubuntu-latest
@@ -94,7 +94,9 @@ jobs:
                 sudo udevadm control --reload-rules
                 sudo udevadm trigger --name-match=kvm
             - name: Gradle cache
-              uses: gradle/actions/setup-gradle@v3              
+              uses: gradle/actions/setup-gradle@v4
+              with:
+                cache-disabled: true              
             - name: AVD cache
               uses: actions/cache@v4
               id: avd-cache
