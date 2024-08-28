@@ -96,7 +96,9 @@ jobs:
             - name: Gradle cache
               uses: gradle/actions/setup-gradle@v4
               with:
-                cache-disabled: true              
+                cache-disabled: true
+                cache-cleanup: always     
+                cache-overwrite-existing: true         
             - name: AVD cache
               uses: actions/cache@v4
               id: avd-cache
