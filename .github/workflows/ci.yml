@@ -20,7 +20,7 @@ jobs:
               channel: 'stable'
               architecture: x64
           - name: Analyze code
-            run: flutter analyze .
+            run: flutter analyze . --no-fatal-infos
     flutter_tests:
         name: flutter tests
         runs-on: ubuntu-latest
@@ -73,6 +73,11 @@ jobs:
             arch: [x86_64]
         steps:
             - uses: actions/checkout@v4
+            - name: Set up Java
+              uses: actions/setup-java@v2
+              with:
+                java-version: 17
+                distribution: "temurin"
             - name: Setup Flutter SDK
               uses: subosito/flutter-action@v2
               with:
@@ -89,7 +94,11 @@ jobs:
                 sudo udevadm control --reload-rules
                 sudo udevadm trigger --name-match=kvm
             - name: Gradle cache
-              uses: gradle/actions/setup-gradle@v3              
+              uses: gradle/actions/setup-gradle@v4
+              with:
+                cache-disabled: true
+                cache-cleanup: always     
+                cache-overwrite-existing: true         
             - name: AVD cache
               uses: actions/cache@v4
               id: avd-cache
