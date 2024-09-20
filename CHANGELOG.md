@@ -1,6 +1,6 @@
 ## 18.6.1
 
-*   Update Android to '=18.6.0'
+*   Update Android to '=18.6.1'
 
 ## 18.6.0
 
