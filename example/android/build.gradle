@@ -36,9 +36,6 @@ allprojects {
 
 rootProject.buildDir = '../build'
 
-android {
-    namespace 'com.google.flutter.recaptcha'
-}
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
