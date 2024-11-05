@@ -76,6 +76,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    namespace 'com.google.recaptcha_enterprise_example'
 }
 
 flutter {
