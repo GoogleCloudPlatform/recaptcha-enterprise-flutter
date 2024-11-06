@@ -158,50 +158,52 @@ class _MyAppState extends State<MyApp> {
                 key: const Key('token')),
           ),
         ]),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          TextButton(
-            onPressed: () {
-              initClient();
-            },
-            key: const Key('getClient'),
-            child: Container(
-              color: Colors.green,
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-              child: const Text(
-                'GetClient',
-                style: TextStyle(color: Colors.white, fontSize: 13.0),
+        SingleChildScrollView(
+          child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            TextButton(
+              onPressed: () {
+                initClient();
+              },
+              key: const Key('getClient'),
+              child: Container(
+                color: Colors.green,
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                child: const Text(
+                  'GetClient',
+                  style: TextStyle(color: Colors.white, fontSize: 13.0),
+                ),
               ),
             ),
-          ),
-          TextButton(
-            onPressed: () {
-              execute();
-            },
-            key: const Key('executeButton'),
-            child: Container(
-              color: Colors.green,
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-              child: const Text(
-                'ExecuteGet',
-                style: TextStyle(color: Colors.white, fontSize: 13.0),
+            TextButton(
+              onPressed: () {
+                execute();
+              },
+              key: const Key('executeButton'),
+              child: Container(
+                color: Colors.green,
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                child: const Text(
+                  'ExecuteGet',
+                  style: TextStyle(color: Colors.white, fontSize: 13.0),
+                ),
               ),
             ),
-          ),
-          TextButton(
-            onPressed: () {
-              execute(custom: true);
-            },
-            key: const Key('executeButtonCustom'),
-            child: Container(
-              color: Colors.green,
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-              child: const Text(
-                'ExecuteGetCustom',
-                style: TextStyle(color: Colors.white, fontSize: 13.0),
+            TextButton(
+              onPressed: () {
+                execute(custom: true);
+              },
+              key: const Key('executeButtonCustom'),
+              child: Container(
+                color: Colors.green,
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                child: const Text(
+                  'ExecuteGetCustom',
+                  style: TextStyle(color: Colors.white, fontSize: 13.0),
+                ),
               ),
             ),
-          ),
-        ]),
+          ])
+        ),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           TextButton(
               onPressed: () {
