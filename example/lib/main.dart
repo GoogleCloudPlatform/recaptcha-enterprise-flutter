@@ -140,26 +140,26 @@ class _MyAppState extends State<MyApp> {
       appBar: AppBar(
         title: const Text('reCAPTCHA Example'),
       ),
-      body: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            const Text('reCAPTCHA Client:\n '),
-            Text(_clientState, key: const Key('clientState')),
+      body: SingleChildScrollView(
+        child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              const Text('reCAPTCHA Client:\n '),
+              Text(_clientState, key: const Key('clientState')),
+            ]),
           ]),
-        ]),
-        Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          const Text('reCAPTCHA Token:\n '),
-          SizedBox(
-            width: 300,
-            child: Text(_token,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 12,
-                key: const Key('token')),
-          ),
-        ]),
-        SingleChildScrollView(
-          child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            const Text('reCAPTCHA Token:\n '),
+            SizedBox(
+              width: 300,
+              child: Text(_token,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 12,
+                  key: const Key('token')),
+            ),
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
             TextButton(
               onPressed: () {
                 initClient();
@@ -188,6 +188,8 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
             ),
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
             TextButton(
               onPressed: () {
                 execute(custom: true);
@@ -202,39 +204,39 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
             ),
-          ])
-        ),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          TextButton(
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            TextButton(
+                onPressed: () {
+                  fetchClient();
+                },
+                key: const Key('fetchClient'),
+                child: Container(
+                  color: Colors.lightBlue,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  child: const Text(
+                    'FetchClient',
+                    style: TextStyle(color: Colors.white, fontSize: 13.0),
+                  ),
+                )),
+            TextButton(
               onPressed: () {
-                fetchClient();
+                executeWithFetchClient();
               },
-              key: const Key('fetchClient'),
+              key: const Key('executeFetchButton'),
               child: Container(
                 color: Colors.lightBlue,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 child: const Text(
-                  'FetchClient',
+                  'ExecuteFetch',
                   style: TextStyle(color: Colors.white, fontSize: 13.0),
                 ),
-              )),
-          TextButton(
-            onPressed: () {
-              executeWithFetchClient();
-            },
-            key: const Key('executeFetchButton'),
-            child: Container(
-              color: Colors.lightBlue,
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              child: const Text(
-                'ExecuteFetch',
-                style: TextStyle(color: Colors.white, fontSize: 13.0),
               ),
             ),
-          ),
+          ]),
         ]),
-      ]),
+      )
     ));
   }
 }
