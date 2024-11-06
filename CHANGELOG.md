@@ -1,3 +1,6 @@
+## 18.7.0-beta01
+*   Update Android to '=18.7.0-beta01'
+
 ## 18.6.1
 
 *   Update Android to '=18.6.1'
