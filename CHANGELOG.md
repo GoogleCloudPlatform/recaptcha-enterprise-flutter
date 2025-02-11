@@ -1,3 +1,6 @@
+## 18.7.0
+*   Update Android and iOS to '=18.7.0'
+
 ## 18.7.0-beta01
 *   Update Android to '=18.7.0-beta01'
 
