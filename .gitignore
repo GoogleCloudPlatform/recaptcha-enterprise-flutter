@@ -28,3 +28,4 @@ build/
 **/example/ios/Pods/
 
 **/ios/Flutter/ephemeral
+**/example/android/app/.cxx

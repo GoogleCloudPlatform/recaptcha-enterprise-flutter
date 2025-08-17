@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
@@ -66,6 +67,9 @@ class _MyAppState extends State<MyApp> {
   }
 
   String _getSiteKey() {
+    if (kIsWeb) {
+      return widget.config.webSiteKey;
+    }
     return Platform.isAndroid
         ? widget.config.androidSiteKey
         : widget.config.iosSiteKey;
@@ -137,106 +141,126 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-      appBar: AppBar(
-        title: const Text('reCAPTCHA Example'),
-      ),
-      body: SingleChildScrollView(
-        child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              const Text('reCAPTCHA Client:\n '),
-              Text(_clientState, key: const Key('clientState')),
-            ]),
-          ]),
-          Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            const Text('reCAPTCHA Token:\n '),
-            SizedBox(
-              width: 300,
-              child: Text(_token,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 12,
-                  key: const Key('token')),
+            appBar: AppBar(
+              title: const Text('reCAPTCHA Example'),
             ),
-          ]),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            TextButton(
-              onPressed: () {
-                initClient();
-              },
-              key: const Key('getClient'),
-              child: Container(
-                color: Colors.green,
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                child: const Text(
-                  'GetClient',
-                  style: TextStyle(color: Colors.white, fontSize: 13.0),
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                execute();
-              },
-              key: const Key('executeButton'),
-              child: Container(
-                color: Colors.green,
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                child: const Text(
-                  'ExecuteGet',
-                  style: TextStyle(color: Colors.white, fontSize: 13.0),
-                ),
-              ),
-            ),
-          ]),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            TextButton(
-              onPressed: () {
-                execute(custom: true);
-              },
-              key: const Key('executeButtonCustom'),
-              child: Container(
-                color: Colors.green,
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                child: const Text(
-                  'ExecuteGetCustom',
-                  style: TextStyle(color: Colors.white, fontSize: 13.0),
-                ),
-              ),
-            ),
-          ]),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            TextButton(
-                onPressed: () {
-                  fetchClient();
-                },
-                key: const Key('fetchClient'),
-                child: Container(
-                  color: Colors.lightBlue,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  child: const Text(
-                    'FetchClient',
-                    style: TextStyle(color: Colors.white, fontSize: 13.0),
-                  ),
-                )),
-            TextButton(
-              onPressed: () {
-                executeWithFetchClient();
-              },
-              key: const Key('executeFetchButton'),
-              child: Container(
-                color: Colors.lightBlue,
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                child: const Text(
-                  'ExecuteFetch',
-                  style: TextStyle(color: Colors.white, fontSize: 13.0),
-                ),
-              ),
-            ),
-          ]),
-        ]),
-      )
-    ));
+            body: SingleChildScrollView(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            const Text('reCAPTCHA Client:\n '),
+                            Text(_clientState, key: const Key('clientState')),
+                          ]),
+                    ]),
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Text('reCAPTCHA Token:\n '),
+                          SizedBox(
+                            width: 300,
+                            child: Text(_token,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 12,
+                                key: const Key('token')),
+                          ),
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              initClient();
+                            },
+                            key: const Key('getClient'),
+                            child: Container(
+                              color: Colors.green,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 5),
+                              child: const Text(
+                                'GetClient',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 13.0),
+                              ),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              execute();
+                            },
+                            key: const Key('executeButton'),
+                            child: Container(
+                              color: Colors.green,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 5),
+                              child: const Text(
+                                'ExecuteGet',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 13.0),
+                              ),
+                            ),
+                          ),
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              execute(custom: true);
+                            },
+                            key: const Key('executeButtonCustom'),
+                            child: Container(
+                              color: Colors.green,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 5),
+                              child: const Text(
+                                'ExecuteGetCustom',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 13.0),
+                              ),
+                            ),
+                          ),
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          TextButton(
+                              onPressed: () {
+                                fetchClient();
+                              },
+                              key: const Key('fetchClient'),
+                              child: Container(
+                                color: Colors.lightBlue,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 10),
+                                child: const Text(
+                                  'FetchClient',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 13.0),
+                                ),
+                              )),
+                          TextButton(
+                            onPressed: () {
+                              executeWithFetchClient();
+                            },
+                            key: const Key('executeFetchButton'),
+                            child: Container(
+                              color: Colors.lightBlue,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 10),
+                              child: const Text(
+                                'ExecuteFetch',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 13.0),
+                              ),
+                            ),
+                          ),
+                        ]),
+                  ]),
+            )));
   }
 }
