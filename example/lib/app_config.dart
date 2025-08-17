@@ -21,8 +21,13 @@ import 'package:flutter/services.dart';
 class AppConfig {
   final String androidSiteKey;
   final String iosSiteKey;
+  final String webSiteKey;
 
-  const AppConfig({required this.androidSiteKey, required this.iosSiteKey});
+  const AppConfig({
+    required this.androidSiteKey,
+    required this.iosSiteKey,
+    required this.webSiteKey,
+  });
 
   static Future<AppConfig> forEnvironment(String? env) async {
     env = env ?? 'dev';
@@ -33,6 +38,9 @@ class AppConfig {
 
     final json = jsonDecode(contents);
     return AppConfig(
-        androidSiteKey: json['androidSiteKey'], iosSiteKey: json['iosSiteKey']);
+      androidSiteKey: json['androidSiteKey'],
+      iosSiteKey: json['iosSiteKey'],
+      webSiteKey: json['webSiteKey'],
+    );
   }
 }

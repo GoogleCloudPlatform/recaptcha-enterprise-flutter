@@ -24,3 +24,5 @@ build/
 **/example/ios/.symlinks/
 **/example/ios/Pods/
 
+**/example/android/app/.cxx
+
