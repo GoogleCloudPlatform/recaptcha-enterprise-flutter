@@ -55,7 +55,7 @@ jobs:
               run: flutter pub get
             - uses: futureware-tech/simulator-action@v3
               with:
-                model: 'iPhone 15'
+                model: 'iPhone 16'
             - name: Write sitekeys to file
               env:
                 EXAMPLE_DEV_JSON: ${{ secrets.EXAMPLE_DEV_JSON }}
