@@ -56,6 +56,7 @@ jobs:
             - uses: futureware-tech/simulator-action@v3
               with:
                 model: 'iPhone 16'
+                os_version: '>=18.5'
             - name: Write sitekeys to file
               env:
                 EXAMPLE_DEV_JSON: ${{ secrets.EXAMPLE_DEV_JSON }}
