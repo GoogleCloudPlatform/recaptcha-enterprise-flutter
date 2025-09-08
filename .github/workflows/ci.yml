@@ -45,7 +45,7 @@ jobs:
             - name: Select xcode version
               uses: maxim-lobanov/setup-xcode@v1
               with:
-                xcode-version: '26.0-beta'
+                xcode-version: '16.4'
                 
             - name: Setup Flutter SDK
               uses: subosito/flutter-action@v2
