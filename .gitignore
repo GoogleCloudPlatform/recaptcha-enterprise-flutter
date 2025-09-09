@@ -24,3 +24,4 @@ build/
 **/example/ios/.symlinks/
 **/example/ios/Pods/
 
+**/ios/Flutter/ephemeral
