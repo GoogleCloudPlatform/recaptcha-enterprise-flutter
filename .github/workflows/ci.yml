@@ -29,7 +29,6 @@ jobs:
           - name: Install Flutter
             uses: subosito/flutter-action@v2
             with:
-              flutter-version: '3.35.1'
               channel: stable
               architecture: x64
           - name: Install Flutter dependencies
@@ -82,7 +81,6 @@ jobs:
             - name: Setup Flutter SDK
               uses: subosito/flutter-action@v2
               with:
-                flutter-version: '3.35.1'
                 channel: stable
             - name: Install Flutter dependencies
               run: flutter pub get
