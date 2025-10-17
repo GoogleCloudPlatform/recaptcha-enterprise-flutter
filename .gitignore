@@ -26,3 +26,4 @@ build/
 
 **/example/android/app/.cxx
 
+**/ios/Flutter/ephemeral

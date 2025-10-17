@@ -2,13 +2,13 @@ PODS:
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
-  - recaptcha_enterprise_flutter (18.7.1):
+  - recaptcha_enterprise_flutter (18.8.0):
     - Flutter
-    - RecaptchaEnterprise (<= 18.7.1, >= 18.7.0)
-  - RecaptchaEnterprise (18.7.0):
-    - RecaptchaEnterpriseSDK (= 18.7.0)
+    - RecaptchaEnterprise (= 18.8.0)
+  - RecaptchaEnterprise (18.8.0):
+    - RecaptchaEnterpriseSDK (= 18.8.0)
     - RecaptchaInterop (~> 101.0.0)
-  - RecaptchaEnterpriseSDK (18.7.0)
+  - RecaptchaEnterpriseSDK (18.8.0)
   - RecaptchaInterop (101.0.0)
 
 DEPENDENCIES:
@@ -31,13 +31,13 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/recaptcha_enterprise_flutter/ios"
 
 SPEC CHECKSUMS:
-  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
-  recaptcha_enterprise_flutter: 9d30ab6e76a0ec0c894b21b5a03027f04a920e92
-  RecaptchaEnterprise: a5914ad9db6ff79eaca7258d82ecef6f10009936
-  RecaptchaEnterpriseSDK: 5e72d7f19d2f679b68c25071c33b40f817e21149
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
+  recaptcha_enterprise_flutter: 050566190b4cc368246a5c0ef1c9b1952ba66605
+  RecaptchaEnterprise: a1d985905ade703df814b01f222797cf63ff7ec1
+  RecaptchaEnterpriseSDK: c1a1c5650b68a5eb9037f01878d228bb204d47c6
   RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
 
-PODFILE CHECKSUM: 775997f741c536251164e3eacf6e34abf2eb7a17
+PODFILE CHECKSUM: 57c8aed26fba39d3ec9424816221f294a07c58eb
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
