@@ -1,4 +1,5 @@
 {
     "androidSiteKey": "MYANDROIDSITEKEY",
-    "iosSiteKey": "MYIOSSITEKEY"
+    "iosSiteKey": "MYIOSSITEKEY",
+    "webSiteKey": "MYWEBSITEKEY"
 }
