@@ -16,13 +16,13 @@ import Flutter
 import RecaptchaEnterprise
 import UIKit
 
-public class SwiftRecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
+public class RecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
   var recaptchaClient: RecaptchaClient?
 
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(
       name: "recaptcha_enterprise", binaryMessenger: registrar.messenger())
-    let instance = SwiftRecaptchaEnterprisePlugin()
+    let instance = RecaptchaEnterprisePlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 
