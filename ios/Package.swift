@@ -9,7 +9,7 @@ let package = Package(
         // TODO: Update the platforms your plugin supports.
         // If your plugin only supports iOS, remove `.macOS(...)`.
         // If your plugin only supports macOS, remove `.iOS(...)`.
-        .iOS("15.0"),
+        .iOS("13.0"),
     ],
     products: [
         // TODO: Update your library and target names.

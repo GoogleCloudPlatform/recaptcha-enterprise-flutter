@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.license          = { :file => '../LICENSE' }
   s.author           = 'Google, Inc.'
   s.source           = { :path => '.' }
-  s.source_files = 'recaptcha_enterprise_swift/Sources/recaptcha_enterprise_swift/**/*'
+  s.source_files = 'recaptcha_enterprise_flutter/Sources/recaptcha_enterprise_flutter/**/*.swift'
   s.dependency 'Flutter'
   s.dependency 'RecaptchaEnterprise', '=18.8.2'
   s.platform = :ios, '15.0'

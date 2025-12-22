@@ -16,7 +16,7 @@ import Flutter
 import RecaptchaEnterprise
 import UIKit
 
-public class SwiftRecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
+public class RecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
   var recaptchaClient: RecaptchaClient?
 
   public static func register(with registrar: FlutterPluginRegistrar) {
