@@ -7,14 +7,9 @@ let package = Package(
     // TODO: Update your plugin name.
     name: "recaptcha_enterprise_flutter",
     platforms: [
-        // TODO: Update the platforms your plugin supports.
-        // If your plugin only supports iOS, remove `.macOS(...)`.
-        // If your plugin only supports macOS, remove `.iOS(...)`.
-        .iOS("13.0"),
+        .iOS("15.0"),
     ],
     products: [
-        // TODO: Update your library and target names.
-        // If the plugin name contains "_", replace with "-" for the library name.
         .library(name: "recaptcha-enterprise-flutter", type: .static, targets: ["recaptcha_enterprise_flutter"])
     ],
     dependencies: [
@@ -25,7 +20,6 @@ let package = Package(
     ],
     targets: [
         .target(
-            // TODO: Update your target name.
             name: "recaptcha_enterprise_flutter",
             dependencies: [],
             resources: [
