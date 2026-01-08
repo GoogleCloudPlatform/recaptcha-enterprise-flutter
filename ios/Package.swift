@@ -4,7 +4,6 @@
 import PackageDescription
 
 let package = Package(
-    // TODO: Update your plugin name.
     name: "recaptcha_enterprise_flutter",
     platforms: [
         .iOS("15.0"),
