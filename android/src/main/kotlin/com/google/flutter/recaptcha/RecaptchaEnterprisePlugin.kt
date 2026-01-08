@@ -28,7 +28,9 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 /** RecaptchaEnterprisePlugin */
@@ -36,6 +38,7 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
   private lateinit var channel: MethodChannel
   private lateinit var recaptchaClient: RecaptchaClient
   private var application: Application? = null
+  private val recaptchaModuleScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
   override fun onAttachedToEngine(
     @NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding,
@@ -62,8 +65,8 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
     val siteKey = call.argument<String>("siteKey")
 
     if (siteKey != null) {
-      GlobalScope.launch {
-        try {
+      recaptchaModuleScope.launch {
+          try {
           recaptchaClient = Recaptcha.fetchClient(unwrappedApplication, siteKey)
           result.success(true)
         } catch (exception: Exception) {
@@ -83,8 +86,7 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
     val timeout = call.argument<Double>("timeout")
 
     if (siteKey != null) {
-      GlobalScope.launch {
-
+      recaptchaModuleScope.launch {
         let {
           if (timeout != null) Recaptcha.getClient(unwrappedApplication, siteKey, timeout.toLong())
           else Recaptcha.getClient(unwrappedApplication, siteKey)
@@ -119,7 +121,7 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
 
     val action = mapAction(actionStr)
     val timeout = call.argument<Double>("timeout")
-    GlobalScope.launch {
+    recaptchaModuleScope.launch {
       recaptchaClient
         .let { if (timeout != null) it.execute(action, timeout.toLong()) else it.execute(action) }
         .onSuccess { token -> result.success(token) }
