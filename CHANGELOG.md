@@ -1,3 +1,7 @@
+## 18.9.0-beta01
+*   Update Android and iOS to '=18.9.0-beta01'
+*   Change Android to pass through error code instead of FL_ messages to match iOS (issue #94)
+
 ## 18.8.2
 *   Update iOS to '=18.8.2' and Android to '[18.8.0,18.8.2]'
 
