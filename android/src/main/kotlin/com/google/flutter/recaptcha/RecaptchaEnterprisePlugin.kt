@@ -156,10 +156,8 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
 
   private fun onHandleException(@NonNull result: Result, @NonNull throwable: Throwable, @NonNull fallbackCode: String) {
     if (throwable is RecaptchaException) {
-      // Return the specific error code (e.g., "INTERNAL_ERROR") and the descriptive message
-      result.error(throwable.errorCode.toString(), throwable.errorMessage, null)
+      result.error(throwable.errorCode.errorCode.toString(), throwable.errorMessage, null)
     } else {
-      // Fallback for other non-Recaptcha exceptions
       result.error(fallbackCode, throwable.toString(), null)
     }
   }
