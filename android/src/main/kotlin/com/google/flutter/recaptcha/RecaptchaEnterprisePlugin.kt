@@ -71,7 +71,7 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
           recaptchaClient = Recaptcha.fetchClient(unwrappedApplication, siteKey)
           result.success(true)
         } catch (exception: RecaptchaException) {
-          result.error(exception.errorCode.toString(), exception.errorMessage, null)
+          result.error(exception.errorCode.errorCode.toString(), exception.errorMessage, null)
         }
       }
     }
@@ -101,7 +101,7 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
           }
           .onFailure { exception ->
             if (exception is RecaptchaException) {
-              result.error(exception.errorCode.toString(), exception.errorMessage, null)
+              result.error(exception.errorCode.errorCode.toString(), exception.errorMessage, null)
             } else {
               result.error("FL_CAST_ERROR", "Not a RecaptchaError", null)
             }
@@ -135,7 +135,7 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
         .onSuccess { token -> result.success(token) }
         .onFailure { exception ->
           if (exception is RecaptchaException) {
-            result.error(exception.errorCode.toString(), exception.errorMessage, null)
+            result.error(exception.errorCode.errorCode.toString(), exception.errorMessage, null)
           } else {
             result.error("FL_CAST_ERROR", "Not a RecaptchaError", null)
           }
