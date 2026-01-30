@@ -21,6 +21,7 @@ import androidx.annotation.NonNull
 import com.google.android.recaptcha.Recaptcha
 import com.google.android.recaptcha.RecaptchaAction
 import com.google.android.recaptcha.RecaptchaClient
+import com.google.android.recaptcha.RecaptchaException
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -70,7 +71,7 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
           recaptchaClient = Recaptcha.fetchClient(unwrappedApplication, siteKey)
           result.success(true)
         } catch (exception: Exception) {
-          result.error("FL_INIT_FAILED", exception.toString(), null)
+          onHandleException(result, exception, "FL_INIT_FAILED")
         }
       }
     }
@@ -96,7 +97,7 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
             result.success(true)
           }
           .onFailure { exception ->
-            result.error("FL_INIT_FAILED", exception.toString(), null)
+            onHandleException(result, exception, "FL_INIT_FAILED")
           }
       }
     }
@@ -125,7 +126,7 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
       recaptchaClient
         .let { if (timeout != null) it.execute(action, timeout.toLong()) else it.execute(action) }
         .onSuccess { token -> result.success(token) }
-        .onFailure { exception -> result.error("FL_EXECUTE_FAILED", exception.toString(), null) }
+        .onFailure { exception -> onHandleException(result, exception, "FL_EXECUTE_FAILED") }
     }
   }
 
@@ -152,4 +153,15 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
   override fun onDetachedFromActivityForConfigChanges() {}
 
   override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {}
+
+  private fun onHandleException(@NonNull result: Result, @NonNull throwable: Throwable, @NonNull fallbackCode: String) {
+    if (throwable is RecaptchaException) {
+      // Return the specific error code (e.g., "INTERNAL_ERROR") and the descriptive message
+      result.error(throwable.errorCode.toString(), throwable.errorMessage, null)
+    } else {
+      // Fallback for other non-Recaptcha exceptions
+      result.error(fallbackCode, throwable.toString(), null)
+    }
+  }
 }
+

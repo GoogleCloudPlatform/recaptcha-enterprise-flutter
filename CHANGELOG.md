@@ -1,3 +1,6 @@
+## 18.9.0
+*   Update Android error handling to return RecaptchaException code.
+
 ## 18.8.2
 *   Update iOS to '=18.8.2' and Android to '[18.8.0,18.8.2]'
 
