@@ -21,6 +21,7 @@ import androidx.annotation.NonNull
 import com.google.android.recaptcha.Recaptcha
 import com.google.android.recaptcha.RecaptchaAction
 import com.google.android.recaptcha.RecaptchaClient
+import com.google.android.recaptcha.RecaptchaException
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -41,7 +42,7 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
   private val recaptchaModuleScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
   override fun onAttachedToEngine(
-    @NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding,
+    @NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding
   ) {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "recaptcha_enterprise")
     channel.setMethodCallHandler(this)
@@ -66,11 +67,11 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
 
     if (siteKey != null) {
       recaptchaModuleScope.launch {
-          try {
+        try {
           recaptchaClient = Recaptcha.fetchClient(unwrappedApplication, siteKey)
           result.success(true)
-        } catch (exception: Exception) {
-          result.error("FL_INIT_FAILED", exception.toString(), null)
+        } catch (exception: RecaptchaException) {
+          result.error(exception.errorCode.errorCode.toString(), exception.errorMessage, null)
         }
       }
     }
@@ -88,15 +89,22 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
     if (siteKey != null) {
       recaptchaModuleScope.launch {
         let {
-          if (timeout != null) Recaptcha.getClient(unwrappedApplication, siteKey, timeout.toLong())
-          else Recaptcha.getClient(unwrappedApplication, siteKey)
-        }
+            if (timeout != null) {
+              Recaptcha.getClient(unwrappedApplication, siteKey, timeout.toLong())
+            } else {
+              Recaptcha.getClient(unwrappedApplication, siteKey)
+            }
+          }
           .onSuccess { client ->
             recaptchaClient = client
             result.success(true)
           }
           .onFailure { exception ->
-            result.error("FL_INIT_FAILED", exception.toString(), null)
+            if (exception is RecaptchaException) {
+              result.error(exception.errorCode.errorCode.toString(), exception.errorMessage, null)
+            } else {
+              result.error("FL_CAST_ERROR", "Not a RecaptchaError", null)
+            }
           }
       }
     }
@@ -125,7 +133,13 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
       recaptchaClient
         .let { if (timeout != null) it.execute(action, timeout.toLong()) else it.execute(action) }
         .onSuccess { token -> result.success(token) }
-        .onFailure { exception -> result.error("FL_EXECUTE_FAILED", exception.toString(), null) }
+        .onFailure { exception ->
+          if (exception is RecaptchaException) {
+            result.error(exception.errorCode.errorCode.toString(), exception.errorMessage, null)
+          } else {
+            result.error("FL_CAST_ERROR", "Not a RecaptchaError", null)
+          }
+        }
     }
   }
 
