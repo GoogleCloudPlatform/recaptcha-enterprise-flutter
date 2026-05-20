@@ -1,36 +1,15 @@
 PODS:
   - Flutter (1.0.0)
-  - recaptcha_enterprise_flutter (18.8.2):
-    - Flutter
-    - RecaptchaEnterprise (= 18.9.0-beta01)
-  - RecaptchaEnterprise (18.9.0-beta01):
-    - RecaptchaEnterpriseSDK (= 18.9.0-beta01)
-    - RecaptchaInterop (~> 101.0.0)
-  - RecaptchaEnterpriseSDK (18.9.0-beta01)
-  - RecaptchaInterop (101.0.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - recaptcha_enterprise_flutter (from `.symlinks/plugins/recaptcha_enterprise_flutter/ios`)
-
-SPEC REPOS:
-  trunk:
-    - RecaptchaEnterprise
-    - RecaptchaEnterpriseSDK
-    - RecaptchaInterop
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  recaptcha_enterprise_flutter:
-    :path: ".symlinks/plugins/recaptcha_enterprise_flutter/ios"
 
 SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  recaptcha_enterprise_flutter: f595f5b2c9953696b227463c426aac3cf724baaa
-  RecaptchaEnterprise: 75005b1cd09459e1661fdad5608558017f23c674
-  RecaptchaEnterpriseSDK: c5c12f95e6b59a76ca48709fbbb14d277848d4a7
-  RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
 
 PODFILE CHECKSUM: 57c8aed26fba39d3ec9424816221f294a07c58eb
 
