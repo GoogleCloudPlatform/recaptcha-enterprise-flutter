@@ -14,13 +14,15 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/GoogleCloudPlatform/recaptcha-enterprise-mobile-sdk",
-            exact: "18.9.0-beta01"
+            exact: "18.9.0"
         ),
     ],
     targets: [
         .target(
             name: "recaptcha_enterprise_flutter",
-            dependencies: [],
+            dependencies: [
+                .product(name: "RecaptchaEnterprise", package: "recaptcha-enterprise-mobile-sdk"),
+            ],
             resources: [
                 // TODO: If your plugin requires a privacy manifest
                 // (e.g. if it uses any required reason APIs), update the PrivacyInfo.xcprivacy file
