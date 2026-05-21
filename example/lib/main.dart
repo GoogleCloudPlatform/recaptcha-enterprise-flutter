@@ -15,7 +15,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
-import 'package:recaptcha_enterprise_flutter/recaptcha_enterprise_flutter.dart';
+import 'package:recaptcha_enterprise_flutter/recaptcha.dart';
+import 'package:recaptcha_enterprise_flutter/recaptcha_client.dart';
+import 'package:recaptcha_enterprise_flutter/recaptcha_enterprise.dart';
+import 'package:recaptcha_enterprise_flutter/recaptcha_action.dart';
 import 'dart:io' show Platform;
 import 'package:recaptcha_flutter_example/app_config.dart';
 
