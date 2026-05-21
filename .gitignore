@@ -28,7 +28,3 @@ build/
 **/example/ios/Pods/
 
 **/ios/Flutter/ephemeral
-
-# Xcode Swift Package Manager caches
-**/xcshareddata/swiftpm/
-

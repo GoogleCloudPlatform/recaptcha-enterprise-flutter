@@ -1,6 +1,5 @@
 ## 18.9.0
 *   Update Android and iOS to '=18.9.0'
-*   Fix iOS SPM integration path compatibility issue with Flutter tooling (issue #99)
 
 ## 18.9.0-beta01
 *   Update Android and iOS to '=18.9.0-beta01'
