@@ -20,7 +20,9 @@ let package = Package(
     targets: [
         .target(
             name: "recaptcha_enterprise_flutter",
-            dependencies: [],
+            dependencies: [
+                .product(name: "RecaptchaEnterprise", package: "recaptcha-enterprise-mobile-sdk"),
+            ],
             resources: [
                 // TODO: If your plugin requires a privacy manifest
                 // (e.g. if it uses any required reason APIs), update the PrivacyInfo.xcprivacy file
