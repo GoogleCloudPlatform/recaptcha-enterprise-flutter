@@ -29,3 +29,7 @@ build/
 
 **/ios/Flutter/ephemeral
 **/example/android/app/.cxx
+
+# Xcode Swift Package Manager caches
+**/xcshareddata/swiftpm/
+
