@@ -21,6 +21,10 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('RecaptchaEnterpriseWeb', () {
+    setUp(() {
+      RecaptchaEnterpriseWeb.resetScriptInjected();
+    });
+
     test('default instance is RecaptchaEnterpriseWeb', () {
       RecaptchaEnterpriseWeb.registerWith(null as dynamic);
       expect(RecaptchaEnterprisePlatform.instance, isA<RecaptchaEnterpriseWeb>());
@@ -38,6 +42,30 @@ void main() {
       final result = await plugin.fetchClient('test-key');
       expect(result, isTrue);
       expect(plugin.recaptchaKey, equals('test-key'));
+    });
+
+    test('initClient calls injectScript with correct site key', () async {
+      String? injectedKey;
+      final plugin = RecaptchaEnterpriseWeb(
+        injectScript: (key) {
+          injectedKey = key;
+        },
+      );
+      final result = await plugin.initClient('test-key');
+      expect(result, isTrue);
+      expect(injectedKey, equals('test-key'));
+    });
+
+    test('fetchClient calls injectScript with correct site key', () async {
+      String? injectedKey;
+      final plugin = RecaptchaEnterpriseWeb(
+        injectScript: (key) {
+          injectedKey = key;
+        },
+      );
+      final result = await plugin.fetchClient('test-key');
+      expect(result, isTrue);
+      expect(injectedKey, equals('test-key'));
     });
 
     test('execute throws when key is null', () async {

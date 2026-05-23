@@ -40,12 +40,9 @@ Flutter application for enhanced security.
 
 2.  **Web Setup:**
 
-    For web, you must include the reCAPTCHA Enterprise script in your
-    `index.html` file. Replace `[MYWEBSITEKEY]` with your actual web site key:
-
-    ```html
-    <script src="https://www.google.com/recaptcha/enterprise.js?render=[MYWEBSITEKEY]"></script>
-    ```
+    No manual web configuration is required. The plugin automatically loads
+    the reCAPTCHA Enterprise script when you initialise the client in Dart.
+    The `index.html` file does not need any reCAPTCHA-specific changes.
 
 3.  **Instantiate the `RecaptchaClient`:**
 
@@ -89,7 +86,6 @@ Flutter application for enhanced security.
 
     **Important:**
     * Replace `<ANDROID_SITE_KEY>`, `<IOS_SITE_KEY>`, and `<WEB_SITE_KEY>` with your actual reCAPTCHA Enterprise site keys.
-    * For web, make sure the `<script>` tag in `index.html` is properly configured.
     * The example above demonstrates platform-specific site key selection. You can adopt alternative, such as using asset files, to manage your site keys.
     * Initialization of the SDK can take several seconds to complete. To mitigate this latency, initialize the client as early as possible.
 
