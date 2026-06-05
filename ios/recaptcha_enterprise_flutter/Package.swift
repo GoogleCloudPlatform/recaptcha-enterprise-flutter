@@ -14,7 +14,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/GoogleCloudPlatform/recaptcha-enterprise-mobile-sdk",
-            exact: "18.9.0"
+            exact: "18.9.1"
         ),
     ],
     targets: [
