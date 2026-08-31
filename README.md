@@ -1,4 +1,3 @@
-
 # reCAPTCHA Enterprise Flutter Module
 
 Please note that issues filed in this repository are not an official Google
@@ -11,9 +10,9 @@ in
 [https://github.com/GoogleCloudPlatform/recaptcha-enterprise-mobile-sdk](https://github.com/GoogleCloudPlatform/recaptcha-enterprise-mobile-sdk).
 
 For general documentation on reCAPTCHA Enterprise for mobile applications, see
-[Android](https://cloud.google.com/recaptcha-enterprise/docs/instrument-android-apps)
-and
-[iOS](https://cloud.google.com/recaptcha-enterprise/docs/instrument-ios-apps).
+[Android](https://cloud.google.com/recaptcha-enterprise/docs/instrument-android-apps),
+[iOS](https://cloud.google.com/recaptcha-enterprise/docs/instrument-ios-apps),
+and [Web](https://cloud.google.com/recaptcha-enterprise/docs/instrument-web-apps).
 
 ## Integrating reCAPTCHA Enterprise with your Flutter Application
 
@@ -30,16 +29,22 @@ Flutter application for enhanced security.
     flutter pub add recaptcha_enterprise_flutter
     ```
 
-    **Note:** This library supports only iOS and Android platforms.
+    **Note:** This library supports iOS, Android, and Web platforms.
 
 ### 2. Client Initialization
 
 1.  **Obtain Site Keys:**
 
-    Acquire your reCAPTCHA Enterprise site keys for both Android and iOS
+    Acquire your reCAPTCHA Enterprise site keys for Android, iOS, and Web
     platforms from the Google Cloud Console.
 
-2.  **Instantiate the `RecaptchaClient`:**
+2.  **Web Setup:**
+
+    No manual web configuration is required. The plugin automatically loads
+    the reCAPTCHA Enterprise script when you initialise the client in Dart.
+    The `index.html` file does not need any reCAPTCHA-specific changes.
+
+3.  **Instantiate the `RecaptchaClient`:**
 
     Initialize the client using the appropriate site key based on the platform.
     It's crucial to initialize the client as early as possible within your
@@ -53,9 +58,11 @@ Flutter application for enhanced security.
     void main() async {
       WidgetsFlutterBinding.ensureInitialized();
 
-      final siteKey = Platform.isAndroid
-          ? "<ANDROID_SITE_KEY>"
-          : "<IOS_SITE_KEY>";
+      final siteKey = kIsWeb
+          ? "<WEB_SITE_KEY>"
+          : Platform.isAndroid
+              ? "<ANDROID_SITE_KEY>"
+              : "<IOS_SITE_KEY>";
 
       RecaptchaClient client = await Recaptcha.fetchClient(siteKey);
 
@@ -78,15 +85,11 @@ Flutter application for enhanced security.
     ```
 
     **Important:**
+    * Replace `<ANDROID_SITE_KEY>`, `<IOS_SITE_KEY>`, and `<WEB_SITE_KEY>` with your actual reCAPTCHA Enterprise site keys.
+    * The example above demonstrates platform-specific site key selection. You can adopt alternative, such as using asset files, to manage your site keys.
+    * Initialization of the SDK can take several seconds to complete. To mitigate this latency, initialize the client as early as possible.
 
-    *   Replace `<ANDROID_SITE_KEY>` and `<IOS_SITE_KEY>` with your actual
-        reCAPTCHA Enterprise site keys.
-    *   The example above demonstrates platform-specific site key selection. You
-        can adopt alternative strategies, such as using asset files, to manage
-        your site keys.
-    *   Initialization of the SDK can take several seconds to complete. To
-        mitigate this latency, initialize the client as early as possible,
-
+    
 ### 3. Executing reCAPTCHA Actions
 
 1.  **Invoke the `execute` method:**
