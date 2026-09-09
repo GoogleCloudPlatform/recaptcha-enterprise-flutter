@@ -18,7 +18,7 @@ group 'com.google.flutter.recaptcha'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '2.2.20'
+    ext.kotlin_version = '2.4.20'
     repositories {
         google()
         mavenCentral()
@@ -68,6 +68,7 @@ android {
 kotlin {
     compilerOptions {
         jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+        freeCompilerArgs.add("-Xskip-metadata-version-check")
     }
 }
 
