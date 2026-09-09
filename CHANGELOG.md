@@ -1,3 +1,6 @@
+## 18.9.3
+*   Update Android to '=18.9.3' and iOS to '[18.9.1,18.9.3]'
+
 ## 18.9.1
 *   Update Android and iOS to '=18.9.1'
 
