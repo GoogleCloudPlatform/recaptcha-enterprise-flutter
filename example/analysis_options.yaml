@@ -44,4 +44,8 @@ linter:
 analyzer:
   errors:
       asset_does_not_exist: ignore # force users to configure dev.json first
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
 

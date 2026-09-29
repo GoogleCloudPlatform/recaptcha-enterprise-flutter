@@ -1,3 +1,6 @@
+## 18.9.4
+*   Migrate to built-in Kotlin and update minimum supported SDK version to Flutter 3.44/Dart 3.12 (fixes issue #110)
+
 ## 18.9.3
 *   Update Android to '=18.9.3' and iOS to '[18.9.1,18.9.3]'
 
