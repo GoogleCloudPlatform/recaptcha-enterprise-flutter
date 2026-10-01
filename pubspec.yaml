@@ -14,12 +14,12 @@
 
 name: recaptcha_enterprise_flutter
 description: A flutter plugin for reCAPTCHA Enterprise.
-version: 18.9.3
+version: 18.9.4
 homepage: https://github.com/GoogleCloudPlatform/recaptcha-enterprise-flutter
 
 environment:
-  sdk: '>=2.16.2 <4.0.0'
-  flutter: ">=3.35.0"
+  sdk: ^3.12.0
+  flutter: ">=3.44.0"
 
 dependencies:
   flutter:

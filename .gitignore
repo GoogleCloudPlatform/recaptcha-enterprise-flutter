@@ -20,6 +20,7 @@ build/
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
 .gradle/
+.kotlin/
 
 **/example/assets/config/dev.json
 **/example/ios/Flutter/Generated.xcconfig
