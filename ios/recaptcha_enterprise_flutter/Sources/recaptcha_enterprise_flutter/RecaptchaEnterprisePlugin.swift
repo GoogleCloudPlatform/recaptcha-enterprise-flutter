@@ -46,8 +46,10 @@ public class RecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
         result(true)
       } else if let error = error {
         guard let error = error as? RecaptchaError else {
-          FlutterError.init(
-            code: "FL_CAST_ERROR", message: "Not a RecaptchaError", details: nil
+          result(
+            FlutterError.init(
+              code: "FL_CAST_ERROR", message: "Not a RecaptchaError", details: nil
+            )
           )
           return
         }
@@ -126,8 +128,10 @@ public class RecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
         result(token)
       } else if let error = error {
         guard let error = error as? RecaptchaError else {
-          FlutterError.init(
-            code: "FL_CAST_ERROR", message: "Not a RecaptchaError", details: nil
+          result(
+            FlutterError.init(
+              code: "FL_CAST_ERROR", message: "Not a RecaptchaError", details: nil
+            )
           )
           return
         }
