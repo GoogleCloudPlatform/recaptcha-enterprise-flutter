@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.source           = { :path => '.' }
   s.source_files = 'recaptcha_enterprise_flutter/Sources/recaptcha_enterprise_flutter/**/*'
   s.dependency 'Flutter'
-  s.dependency 'RecaptchaEnterprise', '>=18.9.1', '<=18.9.3'
+  s.dependency 'RecaptchaEnterprise', '>=18.9.1', '<=18.9.4'
   s.platform = :ios, '15.0'
   s.static_framework = true
   # Flutter.framework does not contain a i386 slice.
