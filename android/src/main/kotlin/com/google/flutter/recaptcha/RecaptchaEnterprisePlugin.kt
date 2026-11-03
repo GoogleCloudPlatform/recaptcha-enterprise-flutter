@@ -46,6 +46,7 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
   ) {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "recaptcha_enterprise")
     channel.setMethodCallHandler(this)
+    application = flutterPluginBinding.applicationContext as? Application
   }
 
   fun mapAction(actionStr: String): RecaptchaAction {
@@ -165,5 +166,7 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
 
   override fun onDetachedFromActivityForConfigChanges() {}
 
-  override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {}
+  override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
+    application = binding.activity.application
+  }
 }
