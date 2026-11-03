@@ -64,15 +64,19 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
     }
 
     val siteKey = call.argument<String>("siteKey")
+    if (siteKey == null) {
+      result.error("FL_INIT_FAILED", "Missing site key", null)
+      return
+    }
 
-    if (siteKey != null) {
-      recaptchaModuleScope.launch {
-        try {
-          recaptchaClient = Recaptcha.fetchClient(unwrappedApplication, siteKey)
-          result.success(true)
-        } catch (exception: RecaptchaException) {
-          result.error(exception.errorCode.errorCode.toString(), exception.errorMessage, null)
-        }
+    recaptchaModuleScope.launch {
+      try {
+        recaptchaClient = Recaptcha.fetchClient(unwrappedApplication, siteKey)
+        result.success(true)
+      } catch (exception: RecaptchaException) {
+        result.error(exception.errorCode.errorCode.toString(), exception.errorMessage, null)
+      } catch (exception: Exception) {
+        result.error("FL_CAST_ERROR", "Not a RecaptchaError", null)
       }
     }
   }
@@ -84,34 +88,36 @@ class RecaptchaEnterprisePlugin : FlutterPlugin, MethodCallHandler, ActivityAwar
       return
     }
     val siteKey = call.argument<String>("siteKey")
+    if (siteKey == null) {
+      result.error("FL_INIT_FAILED", "Missing site key", null)
+      return
+    }
     val timeout = call.argument<Double>("timeout")
 
-    if (siteKey != null) {
-      recaptchaModuleScope.launch {
-        let {
-            if (timeout != null) {
-              Recaptcha.getClient(unwrappedApplication, siteKey, timeout.toLong())
-            } else {
-              Recaptcha.getClient(unwrappedApplication, siteKey)
-            }
+    recaptchaModuleScope.launch {
+      let {
+          if (timeout != null) {
+            Recaptcha.getClient(unwrappedApplication, siteKey, timeout.toLong())
+          } else {
+            Recaptcha.getClient(unwrappedApplication, siteKey)
           }
-          .onSuccess { client ->
-            recaptchaClient = client
-            result.success(true)
+        }
+        .onSuccess { client ->
+          recaptchaClient = client
+          result.success(true)
+        }
+        .onFailure { exception ->
+          if (exception is RecaptchaException) {
+            result.error(exception.errorCode.errorCode.toString(), exception.errorMessage, null)
+          } else {
+            result.error("FL_CAST_ERROR", "Not a RecaptchaError", null)
           }
-          .onFailure { exception ->
-            if (exception is RecaptchaException) {
-              result.error(exception.errorCode.errorCode.toString(), exception.errorMessage, null)
-            } else {
-              result.error("FL_CAST_ERROR", "Not a RecaptchaError", null)
-            }
-          }
-      }
+        }
     }
   }
 
   private fun execute(@NonNull call: MethodCall, @NonNull result: Result) {
-    if (!this::recaptchaClient.isInitialized || recaptchaClient == null) {
+    if (!this::recaptchaClient.isInitialized) {
       result.error("FL_EXECUTE_FAILED", "Initialize client first", null)
       return
     }

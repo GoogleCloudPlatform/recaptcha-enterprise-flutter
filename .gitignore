@@ -30,6 +30,7 @@ build/
 
 **/ios/Flutter/ephemeral
 
-# Xcode Swift Package Manager caches
+# Xcode Swift Package Manager caches and user data
 **/xcshareddata/swiftpm/
-
+**/xcuserdata/
+*.iml
