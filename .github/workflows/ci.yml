@@ -71,7 +71,7 @@ jobs:
               run: |
                 SIM_ID=$(xcrun simctl list devices booted | grep -oE '[0-9A-F]{8}-([0-9A-F]{4}-){3}[0-9A-F]{12}' | head -n 1)
                 cd example && flutter build ios --config-only --simulator
-                cd ios && xcodebuild test -workspace Runner.xcworkspace -scheme Runner -destination "platform=iOS Simulator,id=$SIM_ID" -only-testing:RunnerTests
+                cd ios && xcodebuild test -workspace Runner.xcworkspace -scheme Runner -destination "platform=iOS Simulator,id=$SIM_ID" -only-testing:RunnerTests -parallel-testing-enabled NO
     android:
         runs-on: ubuntu-latest
         strategy:
