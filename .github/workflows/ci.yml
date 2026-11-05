@@ -7,15 +7,18 @@ on:
     pull_request:
       branches:
         - main
+
+permissions:
+    contents: read
   
 jobs:
     analysis:
         name: format
         runs-on: ubuntu-latest
         steps:
-          - uses: actions/checkout@v4
+          - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
           - name: Install Flutter
-            uses: subosito/flutter-action@v2
+            uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
             with:
               channel: 'stable'
               architecture: x64
@@ -25,9 +28,9 @@ jobs:
         name: flutter tests
         runs-on: ubuntu-latest
         steps:
-          - uses: actions/checkout@v4
+          - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
           - name: Install Flutter
-            uses: subosito/flutter-action@v2
+            uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
             with:
               channel: stable
               architecture: x64
@@ -39,20 +42,20 @@ jobs:
         name: ios tests
         runs-on: macos-15-xlarge
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
             - name: Select xcode version
-              uses: maxim-lobanov/setup-xcode@v1
+              uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1
               with:
                 xcode-version: '16.4'
                 
             - name: Setup Flutter SDK
-              uses: subosito/flutter-action@v2
+              uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
               with:
                 channel: stable
             - name: Install Flutter dependencies
               run: flutter pub get
-            - uses: futureware-tech/simulator-action@v3
+            - uses: futureware-tech/simulator-action@bfa03d93ec9de6dacb0c5553bbf8da8afc6c2ee9 # v3
               with:
                 model: 'iPhone 16'
                 os_version: '>=18.5'
@@ -67,7 +70,8 @@ jobs:
             - name: Run native iOS unit tests
               run: |
                 SIM_ID=$(xcrun simctl list devices booted | grep -oE '[0-9A-F]{8}-([0-9A-F]{4}-){3}[0-9A-F]{12}' | head -n 1)
-                cd example/ios && xcodebuild test -workspace Runner.xcworkspace -scheme Runner -destination "platform=iOS Simulator,id=$SIM_ID" -only-testing:RunnerTests
+                cd example && flutter build ios --config-only --simulator
+                cd ios && xcodebuild test -workspace Runner.xcworkspace -scheme Runner -destination "platform=iOS Simulator,id=$SIM_ID" -only-testing:RunnerTests
     android:
         runs-on: ubuntu-latest
         strategy:
@@ -76,14 +80,14 @@ jobs:
             target: [google_apis]
             arch: [x86_64]
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
             - name: Set up Java
-              uses: actions/setup-java@v4
+              uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
               with:
                 java-version: 17
                 distribution: "temurin"
             - name: Setup Flutter SDK
-              uses: subosito/flutter-action@v2
+              uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
               with:
                 channel: stable
             - name: Install Flutter dependencies
@@ -98,11 +102,11 @@ jobs:
                 sudo udevadm control --reload-rules
                 sudo udevadm trigger --name-match=kvm
             - name: Gradle cache
-              uses: gradle/actions/setup-gradle@v4
+              uses: gradle/actions/setup-gradle@ed408507eac070d1f99cc633dbcf757c94c7933a # v4
               with:
                 cache-disabled: false
             - name: AVD cache
-              uses: actions/cache@v4
+              uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
               id: avd-cache
               with:
                 path: |
@@ -111,7 +115,7 @@ jobs:
                 key: avd-${{ matrix.api-level }}
             - name: create AVD and generate snapshot for caching
 #              if: steps.avd-cache.outputs.cache-hit != 'true'
-              uses: reactivecircus/android-emulator-runner@v2
+              uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2
               with:
                 api-level: ${{ matrix.api-level }}
                 target: ${{ matrix.target }}
@@ -122,7 +126,7 @@ jobs:
                 script: echo "Generated AVD snapshot for caching."                  
                   
             - name: Run integration tests
-              uses: reactivecircus/android-emulator-runner@v2
+              uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2
               with:
                 api-level: ${{ matrix.api-level }}
                 target: ${{ matrix.target }}
