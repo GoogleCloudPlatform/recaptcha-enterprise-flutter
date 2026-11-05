@@ -67,5 +67,5 @@ kotlin {
 }
 
 dependencies {
-    implementation 'com.google.android.recaptcha:recaptcha:[18.9.3,18.9.3]'
+    implementation 'com.google.android.recaptcha:recaptcha:[18.9.4,18.9.4]'
 }
