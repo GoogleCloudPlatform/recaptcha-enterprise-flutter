@@ -19,8 +19,9 @@ import 'recaptcha_action.dart';
 class RecaptchaClient {
 
   /// Executes reCAPTCHA Enterprise on a user [action].
-  /// It is suggested the usage of 10 seconds for the [timeout]. The minimum
-  /// value is 5 seconds.
+  ///
+  /// [timeout] is specified in milliseconds. A value of 10000 (10 seconds) is
+  /// suggested, and the minimum value is 5000 (5 seconds).
   Future<String> execute(RecaptchaAction action, {double? timeout}) {
     return RecaptchaEnterprisePlatform.instance
         .execute(action.action, timeout: timeout);
