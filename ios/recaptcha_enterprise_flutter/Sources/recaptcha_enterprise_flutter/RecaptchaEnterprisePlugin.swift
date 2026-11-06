@@ -26,7 +26,7 @@ public class RecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 
-  private func mapAction(_ actionStr: String) -> RecaptchaAction {
+  func mapAction(_ actionStr: String) -> RecaptchaAction {
     if actionStr == "login" {
       return RecaptchaAction.login
     } else if actionStr == "signup" {
@@ -36,7 +36,7 @@ public class RecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
     }
   }
 
-  private func createGetClientHandler(_ result: @escaping FlutterResult) -> (
+  func createGetClientHandler(_ result: @escaping FlutterResult) -> (
     RecaptchaClient?, Error?
   ) -> Void {
     let getClientClosure: (RecaptchaClient?, Error?) -> Void = {
@@ -60,6 +60,30 @@ public class RecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
       }
     }
     return getClientClosure
+  }
+
+  func createExecuteHandler(_ result: @escaping FlutterResult) -> (
+    String?, Error?
+  ) -> Void {
+    let executeClosure: (String?, Error?) -> Void = { token, error -> Void in
+      if let token = token {
+        result(token)
+      } else if let error = error {
+        guard let error = error as? RecaptchaError else {
+          result(
+            FlutterError.init(
+              code: "FL_CAST_ERROR", message: "Not a RecaptchaError", details: nil
+            )
+          )
+          return
+        }
+        result(
+          FlutterError.init(
+            code: String(error.code), message: error.errorMessage, details: nil)
+        )
+      }
+    }
+    return executeClosure
   }
 
   private func fetchClient(
@@ -122,25 +146,7 @@ public class RecaptchaEnterprisePlugin: NSObject, FlutterPlugin {
     }
 
     let action = mapAction(actionStr)
-
-    let executeClosure: (String?, Error?) -> Void = { token, error -> Void in
-      if let token = token {
-        result(token)
-      } else if let error = error {
-        guard let error = error as? RecaptchaError else {
-          result(
-            FlutterError.init(
-              code: "FL_CAST_ERROR", message: "Not a RecaptchaError", details: nil
-            )
-          )
-          return
-        }
-        result(
-          FlutterError.init(
-            code: String(error.code), message: error.errorMessage, details: nil)
-        )
-      }
-    }
+    let executeClosure = createExecuteHandler(result)
 
     if let timeout = args["timeout"] as? Double {
       client.execute(
