@@ -12,6 +12,7 @@ let package = Package(
         .library(name: "recaptcha-enterprise-flutter", type: .static, targets: ["recaptcha_enterprise_flutter"])
     ],
     dependencies: [
+        .package(name: "FlutterFramework", path: "../FlutterFramework"),
         .package(
             url: "https://github.com/GoogleCloudPlatform/recaptcha-enterprise-mobile-sdk",
             exact: "18.9.1"
@@ -21,6 +22,7 @@ let package = Package(
         .target(
             name: "recaptcha_enterprise_flutter",
             dependencies: [
+                .product(name: "FlutterFramework", package: "FlutterFramework"),
                 .product(name: "RecaptchaEnterprise", package: "recaptcha-enterprise-mobile-sdk"),
             ],
             resources: [
